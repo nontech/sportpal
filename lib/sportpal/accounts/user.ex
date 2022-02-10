@@ -7,6 +7,12 @@ defmodule Sportpal.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :username, :string
+    field :gender, :string
+    field :location, :string
+    field :bio, :string
+    field :interests, {:array, inner_type}
+    field :date_of_birth, :date
 
     timestamps()
   end
