@@ -11,7 +11,7 @@ defmodule Sportpal.Accounts.User do
     field :gender, :string
     field :location, :string
     field :bio, :string
-    field :interests, {:array, inner_type}
+    field :interests, :array
     field :date_of_birth, :date
 
     timestamps()
