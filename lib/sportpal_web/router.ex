@@ -20,7 +20,7 @@ defmodule SportpalWeb.Router do
   scope "/", SportpalWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", LandingPageController, :index
   end
 
   # Other scopes may use custom stacks.
