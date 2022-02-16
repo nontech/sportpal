@@ -88,4 +88,15 @@ defmodule SportpalWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
   end
+
+  scope "/", SportpalWeb do
+    pipe_through [:browser, :require_authenticated_user, :onboarding_incomplete]
+
+    get "/users/onboarding-basic-info", OnboardingController, :edit
+    put "/users/onboarding-basic-info", OnboardingController, :update
+    get "/users/onboarding-activity", OnboardingController, :edit
+    put "/users/onboarding-activity", OnboardingController, :update
+
+  end
 end
+
