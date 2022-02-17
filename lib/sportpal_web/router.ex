@@ -2,6 +2,7 @@ defmodule SportpalWeb.Router do
   use SportpalWeb, :router
 
   import SportpalWeb.UserAuth
+  import SportpalWeb.UserOnboarding
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -90,7 +91,7 @@ defmodule SportpalWeb.Router do
   end
 
   scope "/", SportpalWeb do
-    pipe_through [:browser, :require_authenticated_user, :onboarding_incomplete]
+    pipe_through [:browser, :require_authenticated_user, :require_onboarding]
 
     get "/users/onboarding-basic-info", OnboardingController, :edit
     put "/users/onboarding-basic-info", OnboardingController, :update
