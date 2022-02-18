@@ -12,7 +12,8 @@ defmodule SportpalWeb.UserOnboarding do
             conn
         else
             conn
-            |> redirect(to: Routes.onboarding_path(conn, :edit))
+            # |> redirect(to: Routes.onboarding_path(conn, :edit))
+            # |> halt()
         end
     end
 
