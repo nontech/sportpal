@@ -2,19 +2,16 @@
 
 <h3>Basic information</h3>
 
-<.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
+<.form let={f} for={@changeset} action={Routes.onboarding_path(@conn, :update)} phx-change="validate" phx-submit="save"%>
+  
 
+  
   <%= label f, :username %>
-  <%= email_input f, :username, required: true %>
+  <%= text_input f, :username %>
   <%= error_tag f, :username %>
-
+  
   <%= label f, :gender %>
-  <%= password_input f, :gender, required: true %>
+  <%= text_input f, :gender%>
   <%= error_tag f, :gender %>
 
   <div>
