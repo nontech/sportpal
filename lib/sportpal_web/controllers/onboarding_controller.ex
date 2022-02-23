@@ -13,7 +13,7 @@ defmodule SportpalWeb.OnboardingController do
         user = conn.assigns.current_user
     
         case Accounts.update_user_onboarding_data(user, user_params) do
-          {:ok, user} ->
+          {:ok, _user} ->
             conn
             |> put_flash(:info, "Successfully Saved")
             |> redirect(to: Routes.onboarding_path(conn, :edit_activities))
@@ -32,7 +32,7 @@ defmodule SportpalWeb.OnboardingController do
         user = conn.assigns.current_user
 
         case Accounts.update_user_activities(user, user_params) do
-            {:ok, user} ->
+            {:ok, _user} ->
                 conn
                 |> put_flash(:info, "Successfully Saved")
                 |> redirect(to: Routes.onboarding_path(conn, :edit_activities))

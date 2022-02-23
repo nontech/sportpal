@@ -2,7 +2,6 @@ defmodule SportpalWeb.UserOnboarding do
     import Plug.Conn
     import Phoenix.Controller
   
-    alias Sportpal.Accounts.User
     alias SportpalWeb.Router.Helpers, as: Routes
 
     def require_onboarding(conn, _opts) do  
