@@ -47,6 +47,12 @@ defmodule Sportpal.Accounts.User do
     |> validate_required([:gender, :username, :date_of_birth, :location, :bio])
   end
 
+  def activities_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:interests])
+    |> validate_required([:interests])
+  end
+
   defp validate_email(changeset) do
     changeset
     |> validate_required([:email])

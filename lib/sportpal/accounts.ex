@@ -112,6 +112,10 @@ defmodule Sportpal.Accounts do
     User.onboarding_data_changeset(user, attrs)
   end
 
+  def change_user_activities(user, attrs \\ %{}) do
+    User.activities_changeset(user, attrs)
+  end
+
   @doc """
   Emulates that the email will change without actually changing
   it in the database.
@@ -223,6 +227,12 @@ defmodule Sportpal.Accounts do
         user
         |> change_user_onboarding_data(attrs)
         |> Repo.update()
+  end
+
+  def update_user_activities(user, attrs) do
+      user
+      |> change_user_activities(attrs)
+      |> Repo.update()
   end
 
   ## Session

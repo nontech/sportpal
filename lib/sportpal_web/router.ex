@@ -39,8 +39,8 @@ defmodule SportpalWeb.Router do
 
     get "/users/onboarding-basic-info", OnboardingController, :edit
     put "/users/onboarding-basic-info", OnboardingController, :update
-    get "/users/onboarding-activity", OnboardingController, :edit
-    put "/users/onboarding-activity", OnboardingController, :update
+    get "/users/onboarding-activities", OnboardingController, :edit_activities
+    put "/users/onboarding-activities", OnboardingController, :update_activities
 
   end
 
