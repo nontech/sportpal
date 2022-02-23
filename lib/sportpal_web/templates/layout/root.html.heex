@@ -15,7 +15,7 @@
         <nav>
           <%= render "_user_menu.html", assigns %>
         </nav>
-        <h1> SportPal </h1>
+        <a href={Routes.landing_page_path(@conn, :index)}> <h1> SportPal </h1> </a>
       </section>
     </header>
     <%= @inner_content %>

@@ -43,8 +43,8 @@ defmodule Sportpal.Accounts.User do
 
   def onboarding_data_changeset(user, attrs) do
     user
-    |> cast(attrs, [:gender, :username])
-    |> validate_required([:gender, :username])
+    |> cast(attrs, [:gender, :username, :date_of_birth, :location, :bio])
+    |> validate_required([:gender, :username, :date_of_birth, :location, :bio])
   end
 
   defp validate_email(changeset) do
