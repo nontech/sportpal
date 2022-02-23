@@ -26,16 +26,21 @@ defmodule SportpalWeb.Router do
 
   scope "/", SportpalWeb do
     pipe_through [:browser, :require_authenticated_user, :require_onboarding]
-
     # will add matches, conversation, events routes here
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings", UserSettingsController, :update
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+  end
+
+  scope "/", SportpalWeb do
+    pipe_through [:browser, :require_authenticated_user]
 
     get "/users/onboarding-basic-info", OnboardingController, :edit
     put "/users/onboarding-basic-info", OnboardingController, :update
     get "/users/onboarding-activity", OnboardingController, :edit
     put "/users/onboarding-activity", OnboardingController, :update
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
   end
 

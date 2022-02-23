@@ -7,13 +7,14 @@ defmodule SportpalWeb.UserOnboarding do
 
     def require_onboarding(conn, _opts) do  
         user = Map.from_struct(conn.assigns.current_user)
-        required_fields = [:username, :gender, :location, :bio, :date_of_birth, :interests]
+        required_fields = [:username, :gender, :location, :bio, :date_of_birth]
         if required_fields |> Enum.all?(fn x -> user[x] !== nil end) do
             conn
         else
             conn
-            # |> redirect(to: Routes.onboarding_path(conn, :edit))
-            # |> halt()
+            |>put_flash(:info, "Please complete your onboarding first")
+            |> redirect(to: Routes.onboarding_path(conn, :edit))
+            |> halt()
         end
     end
 
