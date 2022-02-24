@@ -52,7 +52,7 @@
   </div>
 </.form>
 
-<h3>Change onboarding data</h3>
+<h3>Change basic info</h3>
 
 <.form let={f} for={@onboarding_data_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_onboarding_data">
   <%= if @onboarding_data_changeset.action do %>
@@ -88,6 +88,7 @@
   </div>
 </.form>
 
+<h3>Change your activities preference </h3>
 <.form let={f} for={@activities_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_activities">
   <%= if @activities_changeset.action do %>
     <div class="alert alert-danger">
