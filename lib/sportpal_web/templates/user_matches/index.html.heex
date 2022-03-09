@@ -1,5 +1,7 @@
 <h3> Listing matches </h3>
 
 <%= for match <- @matches do %>
-    <li> <%= match.username %>  </li>
+    <%= if @user.id != match.id do%>
+        <li> <%= match.username %>  </li>
+    <% end %>
 <% end %>

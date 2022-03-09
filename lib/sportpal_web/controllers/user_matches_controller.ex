@@ -4,7 +4,7 @@ defmodule SportpalWeb.UserMatchesController do
 
     def index(conn, _params) do
         matches = Matches.list_matches(conn.assigns.current_user)
-        render(conn, "index.html", matches: matches)
+        render(conn, "index.html", matches: matches, user: conn.assigns.current_user)
     end
 
 
