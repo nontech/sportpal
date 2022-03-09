@@ -2,6 +2,10 @@
 
 <%= for match <- @matches do %>
     <%= if @user.id != match.id do%>
-        <li> <%= match.username %>  </li>
+        <ul>
+            <b> <%= match.username %></b> 
+            <li> <%= match.bio %> </li>
+            <li> Interested in <%= match.interests %> </li>
+        </ul>
     <% end %>
 <% end %>
