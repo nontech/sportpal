@@ -20,7 +20,7 @@ defmodule Sportpal.MixProject do
   def application do
     [
       mod: {Sportpal.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :crypto]
     ]
   end
 
@@ -49,7 +49,9 @@ defmodule Sportpal.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:egd, github: "erlang/egd"},
+      {:ex_doc, "~> 0.12"}
     ]
   end
 
