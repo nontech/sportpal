@@ -51,7 +51,9 @@ defmodule Sportpal.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:egd, github: "erlang/egd"},
-      {:ex_doc, "~> 0.12"}
+      {:ex_doc, "~> 0.12"},
+      {:absinthe, "~> 1.6.0"},
+      {:absinthe_plug, "~> 1.5"}
     ]
   end
 
