@@ -32,7 +32,6 @@ defmodule SportpalWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
-
   end
 
   scope "/", SportpalWeb do
@@ -42,7 +41,6 @@ defmodule SportpalWeb.Router do
     put "/users/onboarding-basic-info", OnboardingController, :update
     get "/users/onboarding-activities", OnboardingController, :edit_activities
     put "/users/onboarding-activities", OnboardingController, :update_activities
-
   end
 
   # Other scopes may use custom stacks.
@@ -93,7 +91,6 @@ defmodule SportpalWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-
   scope "/", SportpalWeb do
     pipe_through [:browser]
 
@@ -104,6 +101,7 @@ defmodule SportpalWeb.Router do
     post "/users/confirm/:token", UserConfirmationController, :update
   end
 
-  
+  # GraphQL
+  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: SportpalWeb.Graphql.Schema
+  forward "/api/graphql", Absinthe.Plug, schema: SportpalWeb.Graphql.Schema
 end
-
