@@ -20,7 +20,7 @@ defmodule Sportpal.MixProject do
   def application do
     [
       mod: {Sportpal.Application, []},
-      extra_applications: [:logger, :runtime_tools, :crypto]
+      extra_applications: [:logger, :runtime_tools, :crypto, :ueberauth, :ueberauth_google]
     ]
   end
 
@@ -53,7 +53,9 @@ defmodule Sportpal.MixProject do
       {:egd, github: "erlang/egd"},
       {:ex_doc, "~> 0.12"},
       {:absinthe, "~> 1.6.0"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:ueberauth, "~> 0.7"},
+      {:ueberauth_google, "~> 0.10"}
     ]
   end
 
