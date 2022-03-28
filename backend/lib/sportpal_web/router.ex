@@ -89,6 +89,9 @@ defmodule SportpalWeb.Router do
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit
     put "/users/reset_password/:token", UserResetPasswordController, :update
+
+    get "/auth/:provider", GoogleAuthController, :request
+    get "/auth/:provider/callback", GoogleAuthController, :callback
   end
 
   scope "/", SportpalWeb do

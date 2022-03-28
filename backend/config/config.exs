@@ -51,11 +51,11 @@ config :phoenix, :json_library, Jason
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
 
-config :ueberauth, Ueberuth,
+config :ueberauth, Ueberauth,
   providers: [
     google: {Ueberauth.Strategy.Google, []}
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: System.get_env("GOOGLE_CLIENT_ID"),
-  cleint_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+  client_id: "968292888122-c6imp1ia01ktacikrf3i1nkkh2s2jos8.apps.googleusercontent.com",
+  client_secret: "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"
