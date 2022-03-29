@@ -12,9 +12,6 @@ defmodule SportpalWeb.GoogleAuthController do
         insert_or_update_user(conn, changeset)
     end
 
-    def request(conn, params) do
-
-    end
 
     defp insert_or_update_user(conn, changeset) do
         case Repo.get_by(User, email: changeset.changes.email) do

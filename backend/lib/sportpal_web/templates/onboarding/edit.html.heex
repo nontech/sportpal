@@ -19,8 +19,11 @@
   <%= error_tag f, :gender %>
 
   <%= label f, "Where do you live?" %>
-  <%= text_input f, :location, placeholder: "Enter your location..." %>
-  <%= error_tag f, :location %>
+  <%= text_input f, :country, placeholder: "Enter your country" %>
+  <%= error_tag f, :country %>
+
+  <%= text_input f, :city, placeholder: "Enter your city" %>
+  <%= error_tag f, :city %>
 
   <%= label f, "Date of birth" %>
   <%= date_input(f, :date_of_birth)  %>

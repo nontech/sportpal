@@ -112,8 +112,8 @@ defmodule Sportpal.Accounts do
     User.onboarding_data_changeset(user, attrs)
   end
 
-  def change_user_activities(user, attrs \\ %{}) do
-    User.activities_changeset(user, attrs)
+  def change_user_sports(user, attrs \\ %{}) do
+    User.sports_changeset(user, attrs)
   end
 
   @doc """
@@ -229,9 +229,9 @@ defmodule Sportpal.Accounts do
         |> Repo.update()
   end
 
-  def update_user_activities(user, attrs) do
+  def update_user_sports(user, attrs) do
       user
-      |> change_user_activities(attrs)
+      |> change_user_sports(attrs)
       |> Repo.update()
   end
 

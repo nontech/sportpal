@@ -39,8 +39,8 @@ defmodule SportpalWeb.Router do
 
     get "/users/onboarding-basic-info", OnboardingController, :edit
     put "/users/onboarding-basic-info", OnboardingController, :update
-    get "/users/onboarding-activities", OnboardingController, :edit_activities
-    put "/users/onboarding-activities", OnboardingController, :update_activities
+    get "/users/onboarding-sports", OnboardingController, :edit_sports
+    put "/users/onboarding-sports", OnboardingController, :update_sports
   end
 
   # Other scopes may use custom stacks.

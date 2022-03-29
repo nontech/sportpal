@@ -1,0 +1,17 @@
+<h1>Onboarding</h1>
+
+<h3>Select Sports</h3>
+
+<.form let={f} for={@changeset} action={Routes.onboarding_path(@conn, :update_sports)} phx-change="validate" phx-submit="save"%>
+
+    <%= label f, :sports %>
+    <%= multiple_select(f, :sports, ["Tennis": "Tennis", "Dance": "Dance", "Workout": "Workout", "Bouldering": "Bouldering"])  %>
+    <%= error_tag f, :sports %>
+
+    
+    <div>
+    <%= submit "FINISH" %>
+    </div>
+    <span><%= link "Back", to: Routes.google_auth_path(@conn, :edit) %></span>
+
+</.form>
