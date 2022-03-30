@@ -18,6 +18,7 @@ defmodule SportpalWeb.UserSettingsControllerTest do
       conn = get(conn, Routes.user_settings_path(conn, :edit))
       assert redirected_to(conn) == Routes.user_session_path(conn, :new)
     end
+
   end
 
   describe "PUT /users/settings (change password form)" do

@@ -57,5 +57,5 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "968292888122-c6imp1ia01ktacikrf3i1nkkh2s2jos8.apps.googleusercontent.com",
-  client_secret: "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"
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
