@@ -90,6 +90,42 @@ defmodule SportpalWeb.UserSettingsControllerTest do
     end
   end
 
+  describe "PUT /users/settings (change onboarding data form)" do
+        test "updates the user onboarding data", %{conn: conn, user: _user} do
+            conn =
+                put(conn, Routes.user_settings_path(conn, :update), %{
+                    "action" => "update_onboarding_data",
+                    "user" => %{
+                        username: valid_username(),
+                        gender: valid_gender(),
+                        country: valid_country(),
+                        city: valid_city(),
+                        date_of_birth: valid_date_of_birth(),
+                        bio: valid_bio()
+                    }  
+                })
+
+            assert redirected_to(conn) == Routes.user_settings_path(conn, :edit)
+            assert get_flash(conn, :info) =~ "User basic info updated successfully"
+        end
+
+    end
+
+    describe "PUT /users/settings (change sports data form)" do
+        test "updates the user sports data", %{conn: conn, user: _user} do
+            conn =
+                put(conn, Routes.user_settings_path(conn, :update), %{
+                    "action" => "update_sports",
+                    "user" => %{
+                        sports: valid_sports()
+                    }  
+                })
+            
+            assert redirected_to(conn) == Routes.user_settings_path(conn, :edit)
+            assert get_flash(conn, :info) =~ "Sports updated successfully"
+        end
+    end
+
   describe "GET /users/settings/confirm_email/:token" do
     setup %{user: user} do
       email = unique_user_email()

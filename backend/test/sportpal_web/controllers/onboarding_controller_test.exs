@@ -1,6 +1,5 @@
 defmodule SportpalWeb.OnboardingControllerTest do
     use SportpalWeb.ConnCase, async: true
-    alias Sportpal.Accounts
     import Sportpal.AccountsFixtures
 
     setup :register_and_log_in_user
@@ -34,16 +33,16 @@ defmodule SportpalWeb.OnboardingControllerTest do
     end
 
     describe "PUT /users/onboarding-basic-info" do
-        test "updates the user onboarding data", %{conn: conn, user: user} do
+        test "updates the user onboarding data", %{conn: conn, user: _user} do
             conn =
                 put(conn, Routes.onboarding_path(conn, :update), %{
                     "user" => %{
-                        "username": valid_username(),
-                        "gender": valid_gender(),
-                        "country": valid_country(),
-                        "city": valid_city(),
-                        "date_of_birth": valid_date_of_birth(),
-                        "bio": valid_bio()
+                        username: valid_username(),
+                        gender: valid_gender(),
+                        country: valid_country(),
+                        city: valid_city(),
+                        date_of_birth: valid_date_of_birth(),
+                        bio: valid_bio()
                     }  
                 })
 
@@ -54,11 +53,11 @@ defmodule SportpalWeb.OnboardingControllerTest do
     end
 
     describe "PUT /users/onboarding-sports" do
-        test "updates the user sports data", %{conn: conn, user: user} do
+        test "updates the user sports data", %{conn: conn, user: _user} do
             conn =
                 put(conn, Routes.onboarding_path(conn, :update_sports), %{
                     "user" => %{
-                        "sports": valid_sports()
+                        sports: valid_sports()
                     }  
                 })
             
