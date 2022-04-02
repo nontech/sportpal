@@ -4,7 +4,7 @@ defmodule SportpalWeb.UserSettingsControllerTest do
   alias Sportpal.Accounts
   import Sportpal.AccountsFixtures
 
-  setup :register_and_log_in_user
+  setup :log_in_user_with_onboarding_data_saved
 
   describe "GET /users/settings" do
     test "renders settings page", %{conn: conn} do
