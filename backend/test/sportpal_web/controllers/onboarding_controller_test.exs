@@ -3,7 +3,7 @@ defmodule SportpalWeb.OnboardingControllerTest do
     alias Sportpal.Accounts
     import Sportpal.AccountsFixtures
 
-    setup :log_in_user
+    setup :register_and_log_in_user
 
     describe "GET /users/onboarding-basic-info" do
         test "renders onboarding basic info page", %{conn: conn} do
@@ -15,6 +15,20 @@ defmodule SportpalWeb.OnboardingControllerTest do
         test "redirects if user is not logged in" do
             conn = build_conn()
             conn = get(conn, Routes.onboarding_path(conn, :edit))
+            assert redirected_to(conn) == Routes.user_session_path(conn, :new)
+        end
+    end
+
+    describe "GET /users/onboarding-sports" do
+        test "renders onboarding sports page", %{conn: conn} do
+            conn = get(conn, Routes.onboarding_path(conn, :edit_sports))
+            response = html_response(conn, 200)
+            assert response =~ "<h3>Select Sports</h3>"
+        end
+
+        test "redirects if user is not logged in" do
+            conn = build_conn()
+            conn = get(conn, Routes.onboarding_path(conn, :edit_sports))
             assert redirected_to(conn) == Routes.user_session_path(conn, :new)
         end
     end
@@ -46,7 +60,7 @@ defmodule SportpalWeb.OnboardingControllerTest do
     #   assert response =~ "must have the @ sign and no spaces"
     #   assert response =~ "is not valid"
     # end
-  end
+#   end
 
 
 end
