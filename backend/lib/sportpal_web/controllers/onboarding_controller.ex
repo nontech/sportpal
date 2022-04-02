@@ -35,7 +35,7 @@ defmodule SportpalWeb.OnboardingController do
             {:ok, _user} ->
                 conn
                 |> put_flash(:info, "Successfully Saved")
-                |> redirect(to: Routes.onboarding_path(conn, :edit_sports))
+                |> redirect(to: Routes.user_matches_path(conn, :index))
 
             {:error, changeset} ->
                 render(conn, "edit_sports.html", changeset: changeset)

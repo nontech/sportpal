@@ -33,34 +33,39 @@ defmodule SportpalWeb.OnboardingControllerTest do
         end
     end
 
-    # describe "PUT /users/onboarding-basic-info" do
-    # test "updates the user onboarding data", %{conn: conn, user: user} do
-    #   conn =
-    #     put(conn, Routes.onboarding_path(conn, :update), %{
-    #       "action" => "update_email",
-    #       "current_password" => valid_user_password(),
-    #       "user" => %{"email" => unique_user_email()}
-    #     })
+    describe "PUT /users/onboarding-basic-info" do
+        test "updates the user onboarding data", %{conn: conn, user: user} do
+            conn =
+                put(conn, Routes.onboarding_path(conn, :update), %{
+                    "user" => %{
+                        "username": valid_username(),
+                        "gender": valid_gender(),
+                        "country": valid_country(),
+                        "city": valid_city(),
+                        "date_of_birth": valid_date_of_birth(),
+                        "bio": valid_bio()
+                    }  
+                })
 
-    #   assert redirected_to(conn) == Routes.user_settings_path(conn, :edit)
-    #   assert get_flash(conn, :info) =~ "A link to confirm your email"
-    #   assert Accounts.get_user_by_email(user.email)
-    # end
+            assert redirected_to(conn) == Routes.onboarding_path(conn, :edit_sports)
+            assert get_flash(conn, :info) =~ "Successfully Saved"
+        end
 
-    # test "does not update email on invalid data", %{conn: conn} do
-    #   conn =
-    #     put(conn, Routes.user_settings_path(conn, :update), %{
-    #       "action" => "update_email",
-    #       "current_password" => "invalid",
-    #       "user" => %{"email" => "with spaces"}
-    #     })
+    end
 
-    #   response = html_response(conn, 200)
-    #   assert response =~ "<h1>Settings</h1>"
-    #   assert response =~ "must have the @ sign and no spaces"
-    #   assert response =~ "is not valid"
-    # end
-#   end
+    describe "PUT /users/onboarding-sports" do
+        test "updates the user sports data", %{conn: conn, user: user} do
+            conn =
+                put(conn, Routes.onboarding_path(conn, :update_sports), %{
+                    "user" => %{
+                        "sports": valid_sports()
+                    }  
+                })
+            
+            assert redirected_to(conn) == Routes.user_matches_path(conn, :index)
+            assert get_flash(conn, :info) =~ "Successfully Saved"
+        end
+    end
 
 
 end
