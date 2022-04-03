@@ -16,29 +16,29 @@ defmodule SportpalWeb.OnboardingController do
           {:ok, _user} ->
             conn
             |> put_flash(:info, "Successfully Saved")
-            |> redirect(to: Routes.onboarding_path(conn, :edit_activities))
+            |> redirect(to: Routes.onboarding_path(conn, :edit_sports))
     
           {:error, changeset} ->
             render(conn, "edit.html", changeset: changeset)
         end
     end
 
-    def edit_activities(conn, _params) do
-        changeset = Accounts.change_user_activities(conn.assigns.current_user)
-        render(conn, "edit_activities.html", changeset: changeset)
+    def edit_sports(conn, _params) do
+        changeset = Accounts.change_user_sports(conn.assigns.current_user)
+        render(conn, "edit_sports.html", changeset: changeset)
     end
 
-    def update_activities(conn, %{"user" => user_params}) do
+    def update_sports(conn, %{"user" => user_params}) do
         user = conn.assigns.current_user
 
-        case Accounts.update_user_activities(user, user_params) do
+        case Accounts.update_user_sports(user, user_params) do
             {:ok, _user} ->
                 conn
                 |> put_flash(:info, "Successfully Saved")
-                |> redirect(to: Routes.onboarding_path(conn, :edit_activities))
+                |> redirect(to: Routes.user_matches_path(conn, :index))
 
             {:error, changeset} ->
-                render(conn, "edit_activities.html", changeset: changeset)
+                render(conn, "edit_sports.html", changeset: changeset)
         end
     end
 

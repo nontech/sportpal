@@ -50,6 +50,11 @@ defmodule SportpalWeb.ConnCase do
     %{conn: log_in_user(conn, user), user: user}
   end
 
+  def log_in_user_with_onboarding_data_saved(%{conn: conn}) do
+    user = Sportpal.AccountsFixtures.user_fixture_with_onboarding()
+    %{conn: log_in_user(conn, user), user: user}
+  end
+
   @doc """
   Logs the given `user` into the `conn`.
 

@@ -34,3 +34,5 @@ npm-debug.log
 
 # Temporary files, for example, from tests or identicon image.png files
 /tmp/
+
+.env

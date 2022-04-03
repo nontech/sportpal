@@ -7,5 +7,6 @@
 <% else %>
   <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
   <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
+  <%= link "Sign in with Google", to: Routes.google_auth_path(@conn, :request, "google") %>
 <% end %>
 </ul>
