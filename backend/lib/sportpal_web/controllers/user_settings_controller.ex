@@ -5,7 +5,7 @@ defmodule SportpalWeb.UserSettingsController do
   alias SportpalWeb.UserAuth
 
   plug :assign_email_and_password_changesets
-  plug :assign_onboarding_data_and_activities_changesets
+  plug :assign_onboarding_data_and_sports_changesets
 
   def edit(conn, _params) do
     render(conn, "edit.html")
@@ -66,18 +66,18 @@ defmodule SportpalWeb.UserSettingsController do
     end
   end
 
-  def update(conn, %{"action" => "update_activities"} = params) do
+  def update(conn, %{"action" => "update_sports"} = params) do
     %{"user" => user_params} = params
     user = conn.assigns.current_user
 
-    case Accounts.update_user_activities(user, user_params) do
+    case Accounts.update_user_sports(user, user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Activities updated successfully")
+        |> put_flash(:info, "Sports updated successfully")
         |> redirect(to: Routes.user_settings_path(conn, :edit))
 
       {:error, changeset} ->
-        render(conn, "edit.html", activities_changeset: changeset)
+        render(conn, "edit.html", sports_changeset: changeset)
     end
   end
 
@@ -105,11 +105,11 @@ defmodule SportpalWeb.UserSettingsController do
     |> assign(:password_changeset, Accounts.change_user_password(user))
   end
 
-  defp assign_onboarding_data_and_activities_changesets(conn, _opts) do
+  defp assign_onboarding_data_and_sports_changesets(conn, _opts) do
     user = conn.assigns.current_user
 
     conn
     |> assign(:onboarding_data_changeset, Accounts.change_user_onboarding_data(user))
-    |> assign(:activities_changeset, Accounts.change_user_activities(user))
+    |> assign(:sports_changeset, Accounts.change_user_sports(user))
   end
 end

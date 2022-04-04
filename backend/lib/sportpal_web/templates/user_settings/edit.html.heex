@@ -1,56 +1,60 @@
 <h1>Settings</h1>
 
-<h3>Change email</h3>
 
-<.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email">
-  <%= if @email_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<%= if @conn.assigns.current_user && @conn.assigns.current_user.hashed_password do %>
+
+  <h3>Change email</h3>
+
+  <.form let={f} for={@email_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_email">
+    <%= if @email_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= hidden_input f, :action, name: "action", value: "update_email" %>
+
+    <%= label f, :email %>
+    <%= email_input f, :email, required: true %>
+    <%= error_tag f, :email %>
+
+    <%= label f, :current_password, for: "current_password_for_email" %>
+    <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
+    <%= error_tag f, :current_password %>
+
+    <div>
+      <%= submit "Change email" %>
     </div>
-  <% end %>
+  </.form>
 
-  <%= hidden_input f, :action, name: "action", value: "update_email" %>
+  <h3>Change password</h3>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, required: true %>
-  <%= error_tag f, :email %>
+  <.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password">
+    <%= if @password_changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
 
-  <%= label f, :current_password, for: "current_password_for_email" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_email" %>
-  <%= error_tag f, :current_password %>
+    <%= hidden_input f, :action, name: "action", value: "update_password" %>
 
-  <div>
-    <%= submit "Change email" %>
-  </div>
-</.form>
+    <%= label f, :password, "New password" %>
+    <%= password_input f, :password, required: true %>
+    <%= error_tag f, :password %>
 
-<h3>Change password</h3>
+    <%= label f, :password_confirmation, "Confirm new password" %>
+    <%= password_input f, :password_confirmation, required: true %>
+    <%= error_tag f, :password_confirmation %>
 
-<.form let={f} for={@password_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_password">
-  <%= if @password_changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+    <%= label f, :current_password, for: "current_password_for_password" %>
+    <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password" %>
+    <%= error_tag f, :current_password %>
+
+    <div>
+      <%= submit "Change password" %>
     </div>
-  <% end %>
-
-  <%= hidden_input f, :action, name: "action", value: "update_password" %>
-
-  <%= label f, :password, "New password" %>
-  <%= password_input f, :password, required: true %>
-  <%= error_tag f, :password %>
-
-  <%= label f, :password_confirmation, "Confirm new password" %>
-  <%= password_input f, :password_confirmation, required: true %>
-  <%= error_tag f, :password_confirmation %>
-
-  <%= label f, :current_password, for: "current_password_for_password" %>
-  <%= password_input f, :current_password, required: true, name: "current_password", id: "current_password_for_password" %>
-  <%= error_tag f, :current_password %>
-
-  <div>
-    <%= submit "Change password" %>
-  </div>
-</.form>
+  </.form>
+<% end %>
 
 <h3>Change basic info</h3>
 
@@ -72,8 +76,10 @@
   <%= error_tag f, :gender %>
 
   <%= label f, "Where do you live?" %>
-  <%= text_input f, :location, placeholder: "Enter your location..." %>
-  <%= error_tag f, :location %>
+  <%= text_input f, :country, placeholder: "Enter your country" %>
+  <%= error_tag f, :country %>
+  <%= text_input f, :city, placeholder: "Enter your city" %>
+  <%= error_tag f, :city %>
 
   <%= label f, "Date of birth" %>
   <%= date_input(f, :date_of_birth)  %>
@@ -88,19 +94,19 @@
   </div>
 </.form>
 
-<h3>Change your activities preference </h3>
-<.form let={f} for={@activities_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_activities">
-  <%= if @activities_changeset.action do %>
+<h3>Change your sports preference </h3>
+<.form let={f} for={@sports_changeset} action={Routes.user_settings_path(@conn, :update)} id="update_sports">
+  <%= if @sports_changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
 
-  <%= hidden_input f, :action, name: "action", value: "update_activities" %>
+  <%= hidden_input f, :action, name: "action", value: "update_sports" %>
 
-  <%= label f, :interests %>
-  <%= multiple_select(f, :interests, ["Tennis": "Tennis", "Dance": "Dance", "Workout": "Workout", "Bouldering": "Bouldering"])  %>
-  <%= error_tag f, :interests %>
+  <%= label f, :sports %>
+  <%= multiple_select(f, :sports, ["Tennis": "Tennis", "Dance": "Dance", "Workout": "Workout", "Bouldering": "Bouldering"])  %>
+  <%= error_tag f, :sports %>
   
   <div>
     <%= submit "SAVE CHANGES" %>

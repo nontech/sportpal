@@ -7,7 +7,7 @@ defmodule Sportpal.Matches do
 
     def list_matches(user) do
         User
-        |> where([u], fragment("? && ?", u.interests, ^user.interests))
+        |> where([u], fragment("? && ?", u.sports, ^user.sports))
         |> Repo.all()
     end
 end

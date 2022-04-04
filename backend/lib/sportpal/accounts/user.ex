@@ -9,10 +9,14 @@ defmodule Sportpal.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :username, :string
     field :gender, :string
-    field :location, :string
     field :bio, :string
-    field :interests, {:array, :string}
+    field :sports, {:array, :string}
     field :date_of_birth, :date
+    field :full_name, :string
+    field :profile_pic, :string
+    field :city, :string
+    field :country, :string
+    field :availability, :string
 
     timestamps()
   end
@@ -43,14 +47,14 @@ defmodule Sportpal.Accounts.User do
 
   def onboarding_data_changeset(user, attrs) do
     user
-    |> cast(attrs, [:gender, :username, :date_of_birth, :location, :bio])
-    |> validate_required([:gender, :username, :date_of_birth, :location, :bio])
+    |> cast(attrs, [:gender, :username, :date_of_birth, :country, :city, :bio])
+    |> validate_required([:gender, :username, :date_of_birth, :country, :city, :bio])
   end
 
-  def activities_changeset(user, attrs) do
+  def sports_changeset(user, attrs) do
     user
-    |> cast(attrs, [:interests])
-    |> validate_required([:interests])
+    |> cast(attrs, [:sports])
+    |> validate_required([:sports])
   end
 
   defp validate_email(changeset) do
