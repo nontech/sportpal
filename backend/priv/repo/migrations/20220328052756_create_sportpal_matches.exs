@@ -1,20 +1,19 @@
-defmodule Sportpal.Repo.Migrations.CreateSportpalMatches do
+defmodule Sportpal.Repo.Migrations.CreateInvitations do
   use Ecto.Migration
 
   def up do
-    create table(:sportpal_matches) do
-      add(:id)
-      add(:sportpal_search_id)
-      add(:initiator_id, references(:users))
-      add(:initiator_decision, :string)
-      add(:partner_id, references(:users))
-      add(:partner_decision, :string)
+    create table(:invitations) do
+      add(:inquiry_id, references("inquiries"))
+      add(:from_id, references("users"))
+      add(:from_decision, :string, default: "")
+      add(:to_id, references("users"))
+      add(:to_decision, :string, default: "")
 
       timestamps()
     end
   end
 
   def down do
-    drop table(:sportpal_matches)
+    drop table(:invitations)
   end
 end
