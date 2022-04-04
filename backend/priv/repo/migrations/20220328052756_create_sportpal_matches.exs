@@ -3,7 +3,7 @@ defmodule Sportpal.Repo.Migrations.CreateInvitations do
 
   def up do
     create table(:invitations) do
-      add(:inquiry_id, references("inquiries"))
+      # add(:inquiry_id, references("inquiries"))
       add(:from_id, references("users"))
       add(:from_decision, :string, default: "")
       add(:to_id, references("users"))
