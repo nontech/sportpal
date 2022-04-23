@@ -1,5 +1,6 @@
 defmodule SportpalWeb.Graphql.SchemaTest do
-  use SportpalWeb.ConnCase, async: true
+  use SportpalWeb.ConnCase
+  import Sportpal.Factory
 
   @item_query """
   query getItem($id: ID!) {
