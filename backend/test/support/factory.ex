@@ -27,10 +27,10 @@ defmodule Sportpal.Factory do
       country: Address.En.country(),
       bio: Lorem.paragraph(),
       date_of_birth: Date.date_of_birth(),
-      sports: "a sport",
+      sports: ["cricket", "football", "tennis"],
       availability: "yes",
-      matching_partners: ["several"],
-      confirmed_at: "some date"
+      matching_partners: [123, 456],
+      confirmed_at: ~U[2016-05-24 13:26:08.003Z]
     }
   end
 
@@ -41,7 +41,7 @@ defmodule Sportpal.Factory do
       city: Address.city(),
       country: Address.En.country(),
       sport: Lorem.word(),
-      date: "some date",
+      date: ~U[2016-05-24 13:26:08.003Z],
       preferred_skill_level:
         sequence(:preferred_skill_level, ["begineer", "intermediate", "expert", "any"])
     }
