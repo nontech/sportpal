@@ -55,7 +55,9 @@ defmodule Sportpal.MixProject do
       {:absinthe, "~> 1.6.0"},
       {:absinthe_plug, "~> 1.5"},
       {:ueberauth, "~> 0.7"},
-      {:ueberauth_google, "~> 0.10"}
+      {:ueberauth_google, "~> 0.10"},
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:faker, "~> 0.17", only: :test}
     ]
   end
 
