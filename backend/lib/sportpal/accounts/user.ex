@@ -10,13 +10,13 @@ defmodule Sportpal.Accounts.User do
     field :username, :string
     field :gender, :string
     field :bio, :string
-    field :sports, {:array, :string}
+    field :sports, :map
     field :date_of_birth, :date
     field :full_name, :string
     field :profile_pic, :string
     field :city, :string
     field :country, :string
-    field :availability, :string
+    field :availability, {:array, :string}
     field :matching_partners, {:array, :integer}
 
     timestamps()
