@@ -10,7 +10,7 @@ defmodule Sportpal.Accounts.User do
     field :username, :string
     field :gender, :string
     field :bio, :string
-    field :sports, :map
+    field :sports, {:array, :string}
     field :date_of_birth, :date
     field :full_name, :string
     field :profile_pic, :string
