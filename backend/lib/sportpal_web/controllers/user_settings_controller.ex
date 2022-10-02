@@ -56,7 +56,7 @@ defmodule SportpalWeb.UserSettingsController do
     user = conn.assigns.current_user
 
     case Accounts.update_user_onboarding_data(user, user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "User basic info updated successfully")
         |> redirect(to: Routes.user_settings_path(conn, :edit))
@@ -71,7 +71,7 @@ defmodule SportpalWeb.UserSettingsController do
     user = conn.assigns.current_user
 
     case Accounts.update_user_sports(user, user_params) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "Sports updated successfully")
         |> redirect(to: Routes.user_settings_path(conn, :edit))
