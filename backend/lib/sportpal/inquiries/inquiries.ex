@@ -7,7 +7,16 @@ defmodule Sportpal.Inquiries.Inquiries do
   alias Sportpal.Repo
   alias Sportpal.Inquiries.Inquiry
 
-  def get_matches(
+  @doc """
+  Returns the list of Inquiries with preloaded user data.
+
+  ## Examples
+
+      iex> matches()
+      [%Inquiry{}, ...]
+
+  """
+  def matches(
         %{
           user_id: user_id,
           city: city,
