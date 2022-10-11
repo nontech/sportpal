@@ -45,7 +45,7 @@ defmodule Sportpal.AccountsFixtures do
     user
   end
 
-  def user_fixture_with_onboarding(attrs \\ %{}) do
+  def user_fixture_with_onboarding(_attrs \\ %{}) do
     user = user_fixture()
     {:ok, user} = Sportpal.Accounts.update_user_onboarding_data(user, valid_onboarding_attributes())
 
