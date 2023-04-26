@@ -12,31 +12,31 @@ If you
 # Features
 The Sports Partner Elixir Project comes with the following features:
 
-User Authentication: Users can sign up, log in and log out of the platform.
-User Profiles: Users can create and edit their profile information.
-Sports Activities: Users can create sports activities and invite other users to join them.
-Search: Users can search for sports activities based on different criteria such as sport type, location, and date.
-Messaging: Users can send and receive messages to communicate with each other.
+- User Authentication: Users can sign up, log in and log out of the platform.
+- User Profiles: Users can create and edit their profile information.
+- Sports Activities: Users can create sports activities and invite other users to join them.
+- Search: Users can search for sports activities based on different criteria such as sport type, location, and date.
+- Messaging: Users can send and receive messages to communicate with each other.
 
 # Technologies Used
 The following technologies were used to build this project:
 
-Elixir programming language
-Phoenix framework
-GraphQL API
-PostgreSQL database
-Absinthe GraphQL library
+- Elixir programming language
+- Phoenix framework
+- GraphQL API
+- PostgreSQL database
+- Absinthe GraphQL library
 
 # Getting Started
 To get started with this project, follow these steps:
 
-Clone the repository to your local machine.
-Install Elixir and Phoenix framework.
-Install PostgreSQL database.
-Configure the database connection in the config/dev.exs file.
-Run the database migrations: mix ecto.migrate.
-Start the Phoenix server: mix phx.server.
-Open the web browser and navigate to http://localhost:4000.
+1. Clone the repository to your local machine.
+2. Install Elixir and Phoenix framework.
+3. Install PostgreSQL database.
+4. Configure the database connection in the config/dev.exs file.
+5. Run the database migrations: mix ecto.migrate.
+6. Start the Phoenix server: mix phx.server.
+7. Open the web browser and navigate to http://localhost:4000.
 
 # API Documentation
 This project uses GraphQL API for data communication. The API documentation can be found at http://localhost:4000/api/graphiql after starting the Phoenix server.
@@ -44,11 +44,11 @@ This project uses GraphQL API for data communication. The API documentation can 
 # Contributing
 If you would like to contribute to this project, please follow these steps:
 
-Fork the repository.
-Create a new branch for your changes.
-Make your changes and commit them with descriptive commit messages.
-Push your changes to your forked repository.
-Submit a pull request to the original repository.
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your changes and commit them with descriptive commit messages.
+4. Push your changes to your forked repository.
+5. Submit a pull request to the original repository.
 
 # License
 This project is licensed under the MIT License. See the LICENSE file for more information.
