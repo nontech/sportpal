@@ -26,7 +26,7 @@ The following technologies were used to build this project:
 - GraphQL API
 - PostgreSQL database
 - Absinthe GraphQL library
-- React (frontend)
+- React (frontend) *in progress
 
 # Getting Started
 To get started with this project, follow these steps:
