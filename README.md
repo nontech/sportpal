@@ -16,7 +16,7 @@ The Sports Partner Elixir Project comes with the following features:
 - User Profiles: Users can create and edit their profile information.
 - Sports Activities: Users can create sports activities and invite other users to join them.
 - Search: Users can search for sports activities based on different criteria such as sport type, location, and date.
-- Messaging: Users can send and receive messages to communicate with each other.
+- Messaging [in progress] : Users can send and receive messages to communicate with each other.
 
 # Technologies Used
 The following technologies were used to build this project:
@@ -26,6 +26,7 @@ The following technologies were used to build this project:
 - GraphQL API
 - PostgreSQL database
 - Absinthe GraphQL library
+- React (frontend)
 
 # Getting Started
 To get started with this project, follow these steps:
@@ -34,9 +35,10 @@ To get started with this project, follow these steps:
 2. Install Elixir and Phoenix framework.
 3. Install PostgreSQL database.
 4. Configure the database connection in the config/dev.exs file.
-5. Run the database migrations: mix ecto.migrate.
-6. Start the Phoenix server: mix phx.server.
-7. Open the web browser and navigate to http://localhost:4000.
+5. Install dependencies with mix deps.get
+6. Create and migrate your database with mix ecto.setup
+8. Start the Phoenix server: mix phx.server.
+9. Open the web browser and navigate to http://localhost:4000.
 
 # API Documentation
 This project uses GraphQL API for data communication. The API documentation can be found at http://localhost:4000/api/graphiql after starting the Phoenix server.
@@ -53,6 +55,4 @@ If you would like to contribute to this project, please follow these steps:
 # ER Diagram
 [Click here to view the ER diagram](./docs/diagrams/Sportpal_ER_diagram.png)
 
-# License
-This project is licensed under the MIT License. See the LICENSE file for more information.
 
