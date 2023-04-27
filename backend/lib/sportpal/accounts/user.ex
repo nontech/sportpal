@@ -16,6 +16,7 @@ defmodule Sportpal.Accounts.User do
     field :profile_pic, :string
     field :city, :string
     field :country, :string
+    field :availability, {:array, :string}
     field :matching_partners, {:array, :integer}
 
     timestamps()
