@@ -40,6 +40,8 @@ jobs:
         cd ./backend 
         mix deps.get
     - name: Run tests
+      env:
+        TEST_DB_CREDS: ${{ secrets.TEST_DB_CREDS }}
       run: |
         cd ./backend  
         mix test
