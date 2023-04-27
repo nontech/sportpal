@@ -1,22 +1,9 @@
 defmodule Sportpal.Inquiries.Inquiries do
-  @moduledoc """
-  The Inquiries context.
-  """
-
-  import Ecto.Query, warn: false
+  import Ecto.Query
   alias Sportpal.Repo
   alias Sportpal.Inquiries.Inquiry
 
-  @doc """
-  Returns the list of Inquiries with preloaded user data.
-
-  ## Examples
-
-      iex> matches()
-      [%Inquiry{}, ...]
-
-  """
-  def matches(
+  def get_matches(
         %{
           user_id: user_id,
           city: city,
@@ -48,92 +35,5 @@ defmodule Sportpal.Inquiries.Inquiries do
         preload: [user: u]
 
     Repo.all(query)
-  end
-
-  @doc """
-  Returns the list of inquiries.
-
-  ## Examples
-
-      iex> list_inquiries()
-      [%Inquiry{}, ...]
-
-  """
-  def list_inquiries do
-    raise "TODO"
-  end
-
-  @doc """
-  Gets a single inquiry.
-
-  Raises if the Inquiry does not exist.
-
-  ## Examples
-
-      iex> get_inquiry!(123)
-      %Inquiry{}
-
-  """
-  def get_inquiry!(id), do: raise("TODO")
-
-  @doc """
-  Creates a inquiry.
-
-  ## Examples
-
-      iex> create_inquiry(%{field: value})
-      {:ok, %Inquiry{}}
-
-      iex> create_inquiry(%{field: bad_value})
-      {:error, ...}
-
-  """
-  def create_inquiry(attrs \\ %{}) do
-    raise "TODO"
-  end
-
-  @doc """
-  Updates a inquiry.
-
-  ## Examples
-
-      iex> update_inquiry(inquiry, %{field: new_value})
-      {:ok, %Inquiry{}}
-
-      iex> update_inquiry(inquiry, %{field: bad_value})
-      {:error, ...}
-
-  """
-  def update_inquiry(%Inquiry{} = inquiry, attrs) do
-    raise "TODO"
-  end
-
-  @doc """
-  Deletes a Inquiry.
-
-  ## Examples
-
-      iex> delete_inquiry(inquiry)
-      {:ok, %Inquiry{}}
-
-      iex> delete_inquiry(inquiry)
-      {:error, ...}
-
-  """
-  def delete_inquiry(%Inquiry{} = inquiry) do
-    raise "TODO"
-  end
-
-  @doc """
-  Returns a data structure for tracking inquiry changes.
-
-  ## Examples
-
-      iex> change_inquiry(inquiry)
-      %Todo{...}
-
-  """
-  def change_inquiry(%Inquiry{} = inquiry, _attrs \\ %{}) do
-    raise "TODO"
   end
 end
