@@ -41,7 +41,8 @@ jobs:
         mix deps.get
     - name: Run tests
       env:
-        TEST_DB_CREDS: ${{ secrets.TEST_DB_CREDS }}
+        POSTGRES_USER: "aman"
+        POSTGRES_PWD: ${{ secrets.TEST_DB_PASSWORD }}
       run: |
         cd ./backend  
         mix test
