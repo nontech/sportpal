@@ -42,8 +42,7 @@ jobs:
     - name: Run tests
       env:
         POSTGRES_USER: "aman"
-        POSTGRES_PWD: ${{ secrets.TEST_DB_PASSWORD }}
+        POSTGRES_PWD: "12345678"
       run: |
         cd ./backend  
-        mix test --database-username=$POSTGRES_USER \
-                  --database-password=$POSTGRES_PWD
+        mix test
