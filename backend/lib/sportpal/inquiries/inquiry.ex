@@ -3,16 +3,16 @@ defmodule Sportpal.Inquiries.Inquiry do
   import Ecto.Changeset
 
   schema "inquiries" do
-    field(:city, :string, default: "")
-    field(:country, :string, default: "")
-    field(:sport, :string, default: "")
-    field(:date, :date)
-    field(:preferred_skill_level, :string, default: "")
+    field :city, :string, default: ""
+    field :country, :string, default: ""
+    field :sports, {:array, :string}
+    field :date, :date
+    field :preferred_skill_level, :string, default: ""
 
     # one-to-one
-    belongs_to(:user, Sportpal.Accounts.User)
+    belongs_to :user, Sportpal.Accounts.User
     # one-to-one
-    has_one(:invitation, Sportpal.Invitations.Invitation)
+    has_one :invitation, Sportpal.Invitations.Invitation
 
     timestamps()
   end
