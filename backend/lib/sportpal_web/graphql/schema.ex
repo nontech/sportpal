@@ -93,7 +93,7 @@ defmodule SportpalWeb.Graphql.Schema do
   @desc "A matching sportpal user details"
   object :matching_sportpal do
     field :username, :string
-    filed(:full_name, :string)
+    field :full_name, :string
     field :profile_pic, :string
     field :bio, :string
   end
