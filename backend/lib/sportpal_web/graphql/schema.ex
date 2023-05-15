@@ -16,11 +16,17 @@ defmodule SportpalWeb.Graphql.Schema do
       resolve(&get_user/3)
     end
 
-    field :exact_matches, list_of(:match) do
-      arg(:match, non_null(:exact_match_form))
+    field :instant_matches, list_of(:match) do
+      arg(:match, non_null(:instant_match_data))
 
-      resolve(&get_exact_matches/3)
+      resolve(&get_instant_matches/3)
     end
+
+    # field :profile_matches, list_of(:match) do
+    #   arg(:match, non_null(:profile_match_data))
+
+    #   resolve(&get_profile_matches/3)
+    # end
   end
 
   # MUTATIONS
@@ -32,7 +38,7 @@ defmodule SportpalWeb.Graphql.Schema do
     {:ok, Accounts.get_user!(id)}
   end
 
-  defp get_exact_matches(_parent, %{match: match_args} = _args, _resolution) do
+  defp get_instant_matches(_parent, %{match: match_args} = _args, _resolution) do
     inquiries = Inquiries.get_matches(match_args)
 
     # convert it into desired object shape
@@ -76,12 +82,20 @@ defmodule SportpalWeb.Graphql.Schema do
 
   @desc "A matching sportpal"
   object :match do
-    field(:full_name, non_null(:string))
-    field(:profile_pic, non_null(:string))
-    field(:sport, non_null(:string))
-    field(:preferred_skill_level, non_null(:string))
-    field(:city, non_null(:string))
-    field(:country, non_null(:string))
+    field :sports, list_of(:string)
+    # field(:date, non_null(:date))
+    field :city, non_null(:string)
+    field :country, non_null(:string)
+    field :skill_level, non_null(:string)
+    field :user, :matching_sportpal
+  end
+
+  @desc "A matching sportpal user details"
+  object :matching_sportpal do
+    field :username, :string
+    filed(:full_name, :string)
+    field :profile_pic, :string
+    field :bio, :string
   end
 
   # INPUT OBJECTS
@@ -89,13 +103,13 @@ defmodule SportpalWeb.Graphql.Schema do
 
   # merely here to model structure
   # does not have any args or a resolver of its own
-  @desc "User inputs for exact match"
-  input_object :exact_match_form do
-    field(:user_id, non_null(:integer))
-    field(:city, non_null(:string))
-    field(:country, non_null(:string))
-    field(:sport, non_null(:string))
+  @desc "User inputs for instant match"
+  input_object :instant_match_data do
+    field :city, non_null(:string)
+    field :country, non_null(:string)
+    field :sports, list_of(:string)
+    # TODO: fix date type
     # field(:date, non_null(:date))
-    field(:preferred_skill_level, non_null(:string))
+    field :skill_level, non_null(:string)
   end
 end
