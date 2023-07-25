@@ -1,0 +1,56 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main # Adjust this to match your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          otp-version: '22.x' # Adjust this to match your Phoenix project's requirements
+          elixir-version: '1.12.x' # Adjust this to match your Phoenix project's requirements
+
+      - name: Install Dependencies
+        run: mix deps.get
+
+      - name: Run Tests
+        run: mix test
+
+      - name: Build Release
+        run: mix release
+
+  deploy:
+    needs: build # This ensures the 'deploy' job runs only after the 'build' job is successful
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          otp-version: '22.x' # Adjust this to match your Phoenix project's requirements
+          elixir-version: '1.12.x' # Adjust this to match your Phoenix project's requirements
+
+      - name: Install Dependencies
+        run: mix deps.get
+
+      - name: Run Tests
+        run: mix test
+
+      - name: Build Release
+        run: mix release
+
+      - name: Deploy to Server
+        # Add steps to deploy your Phoenix application to your deployment environment here
+        run: 
