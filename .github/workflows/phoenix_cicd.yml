@@ -51,6 +51,6 @@ jobs:
       - name: Build Release
         run: mix release
 
-      - name: Deploy to Server
+      #- name: Deploy to Server
         # Add steps to deploy your Phoenix application to your deployment environment here
-        run: 
+        #run: 
