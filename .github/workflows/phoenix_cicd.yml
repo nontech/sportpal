@@ -12,12 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Install libtinfo
+        run: sudo apt-get update && sudo apt-get install -y libtinfo5
+
 
       - name: Setup Elixir
         uses: actions/setup-elixir@v1
         with:
           otp-version: '24' # Adjust this to match your Phoenix project's requirements
-          elixir-version: '1.12.2' # Adjust this to match your Phoenix project's requirements
+          elixir-version: '1.12' # Adjust this to match your Phoenix project's requirements
 
       - name: Install Dependencies
         working-directory: ./backend   # Set the working directory to the backend folder
