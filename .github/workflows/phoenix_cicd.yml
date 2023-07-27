@@ -15,6 +15,10 @@ jobs:
         
       - name: Install libtinfo
         run: sudo apt-get update && sudo apt-get install -y libtinfo5
+        
+      - name: Install libcrypto
+        run: sudo apt-get update && sudo apt-get install -y libssl1.0-dev
+
  
 
       - name: Setup Elixir
