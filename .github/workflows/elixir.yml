@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      POSTGRES_USER: aman
-      POSTGRES_PWD: 12345678
+      POSTGRES_USER: postgres
+      POSTGRES_PWD: postgres
 
     steps:
     - uses: actions/checkout@v3
