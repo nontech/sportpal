@@ -19,6 +19,14 @@ jobs:
 
     name: Build and test
     runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: "aman"
+          POSTGRES_PASSWORD: "12345678"
+
 
     steps:
     - uses: actions/checkout@v3
@@ -36,6 +44,12 @@ jobs:
     - name: Install dependencies
       working-directory: ./backend
       run: mix deps.get
+      
+      # Assuming this step comes after the PostgreSQL service setup and environment variable configuration
+    - name: Run Phoenix Database Setup
+      working-directory: ./backend
+      run: mix ecto.setup
+
     - name: Run tests
       working-directory: ./backend
       run: mix test
