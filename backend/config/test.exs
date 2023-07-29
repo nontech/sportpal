@@ -11,10 +11,16 @@ config :bcrypt_elixir, :log_rounds, 1
 config :sportpal, Sportpal.Repo,
   username: System.get_env("POSTGRES_USER"),
   password: System.get_env("POSTGRES_PWD"),
-  database: "sportpal_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "sportpal_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
+
+if System.get_env("GITHUB_ACTIONS") do
+    config :sportpal, MyApp.Repo,
+      username: "postgres",
+      password: "postgres"
+end
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
