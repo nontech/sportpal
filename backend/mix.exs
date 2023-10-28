@@ -57,7 +57,8 @@ defmodule Sportpal.MixProject do
       {:ueberauth, "~> 0.7"},
       {:ueberauth_google, "~> 0.10"},
       {:ex_machina, "~> 2.7.0", only: :test},
-      {:faker, "~> 0.17", only: :test}
+      {:faker, "~> 0.17", only: :test},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
