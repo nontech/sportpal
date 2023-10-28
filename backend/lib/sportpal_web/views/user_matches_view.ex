@@ -1,3 +1,3 @@
 defmodule SportpalWeb.UserMatchesView do
-    use SportpalWeb, :view
-  end
+  use SportpalWeb, :view
+end

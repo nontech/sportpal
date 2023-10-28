@@ -17,9 +17,9 @@ config :sportpal, Sportpal.Repo,
   pool_size: 10
 
 if System.get_env("GITHUB_ACTIONS") do
-    config :sportpal, MyApp.Repo,
-      username: "postgres",
-      password: "postgres"
+  config :sportpal, MyApp.Repo,
+    username: "postgres",
+    password: "postgres"
 end
 
 # We don't run a server during test. If one is required,

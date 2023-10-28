@@ -9,6 +9,6 @@ defmodule Sportpal.Repo.Migrations.UpdateUserTable do
       add :bio, :string
       add :interests, {:array, :string}
       add :date_of_birth, :date
-    end 
+    end
   end
 end

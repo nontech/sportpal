@@ -1,4 +1,3 @@
 defmodule SportpalWeb.OnboardingView do
-    use SportpalWeb, :view
+  use SportpalWeb, :view
 end
-  

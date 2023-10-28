@@ -81,8 +81,6 @@ defmodule SportpalWeb.UserSettingsController do
     end
   end
 
-
-
   def confirm_email(conn, %{"token" => token}) do
     case Accounts.update_user_email(conn.assigns.current_user, token) do
       :ok ->

@@ -1,3 +1,3 @@
 defmodule SportpalWeb.LandingPageView do
-    use SportpalWeb, :view
+  use SportpalWeb, :view
 end

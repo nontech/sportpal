@@ -12,7 +12,7 @@ defmodule Sportpal.AccountsFixtures do
   def valid_gender, do: "Male"
   def valid_country, do: "Germany"
   def valid_city, do: "Berlin"
-  def valid_date_of_birth, do:  "1998-02-05"
+  def valid_date_of_birth, do: "1998-02-05"
   def valid_bio, do: "testing.."
   def valid_sports, do: ["Tennis"]
 
@@ -35,7 +35,6 @@ defmodule Sportpal.AccountsFixtures do
     })
   end
 
-
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
@@ -47,10 +46,11 @@ defmodule Sportpal.AccountsFixtures do
 
   def user_fixture_with_onboarding(_attrs \\ %{}) do
     user = user_fixture()
-    {:ok, user} = Sportpal.Accounts.update_user_onboarding_data(user, valid_onboarding_attributes())
+
+    {:ok, user} =
+      Sportpal.Accounts.update_user_onboarding_data(user, valid_onboarding_attributes())
 
     user
-
   end
 
   def extract_user_token(fun) do

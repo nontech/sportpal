@@ -224,15 +224,15 @@ defmodule Sportpal.Accounts do
   end
 
   def update_user_onboarding_data(user, attrs) do
-        user
-        |> change_user_onboarding_data(attrs)
-        |> Repo.update()
+    user
+    |> change_user_onboarding_data(attrs)
+    |> Repo.update()
   end
 
   def update_user_sports(user, attrs) do
-      user
-      |> change_user_sports(attrs)
-      |> Repo.update()
+    user
+    |> change_user_sports(attrs)
+    |> Repo.update()
   end
 
   ## Session
