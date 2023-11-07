@@ -26,6 +26,9 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,18 +38,21 @@ jobs:
           otp-version: ${{ env.OTP_VERSION }}
           elixir-version: ${{ env.ELIXIR_VERSION }}
       - name: Install dependencies
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.get
       - name: Compile dependencies
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.compile
       - name: Compile
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix compile
 
   test:
     name: Test
     runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./backend
 
     services:
       db:
@@ -75,10 +81,10 @@ jobs:
           elixir-version: ${{ env.ELIXIR_VERSION }}
           otp-version: ${{ env.OTP_VERSION }}
       - name: Install dependencies
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.get
       - name: Compile dependencies
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.compile
       - name: Setup database
         env:
@@ -87,7 +93,7 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix ecto.drop
           mix ecto.create
           mix ecto.migrate
@@ -98,53 +104,5 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        working-directory: ${{ env.WORKING_DIR }}
+        # working-directory: ${{ env.WORKING_DIR }}
         run: mix test
-
-  # Attempt 1: to run test
-  # run-test:
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     # Specify the OTP and Elixir versions to use when building
-  #     # and running the workflow steps
-  #     matrix:
-  #       otp: ["25.0.4"] # Define the OTP version [required]
-  #       elixir: ["1.14.1"] # Define the elixir version [required]
-
-  #   name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-
-  #   # Set up a Postgres DB service. By default, Phoenix applications
-  #   # use Postgres. This creates a database for running tests.
-  #   # Additional services can be defined here if required
-  #   services:
-  #     db:
-  #       image: postgres:latest
-  #       env:
-  #         POSTGRES_PASSWORD: postgres
-  #       options: >-
-  #         --health-cmd pg_isready
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 5
-
-  #   steps:
-  #     # Step: Setup Elixir + Erlang image as the base
-  #     - name: Set up Elixir
-  #       uses: erlef/setup-beam@v1
-  #       with:
-  #         otp-version: ${{matrix.otp}}
-  #         elixir-version: ${{matrix.elixir}}
-
-  #     # Step: Check out the code
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-
-  #     # Step: Download project dependencies. If unchanged, uses the cached version
-  #     - name: Install dependencies
-  #       working-directory: ${{ env.working-directory }}
-  #       run: mix deps.get
-
-  #     # Step: Execute the tests
-  #     - name: Run tests
-  #       working-directory: ${{ env.working-directory }}
-  #       run: mix test
