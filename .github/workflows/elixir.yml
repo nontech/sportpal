@@ -15,55 +15,136 @@ on:
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:
   MIX_ENV: test
-  working-directory: ./backend
+  WORKING_DIR: ./backend
+  ELIXIR_VERSION: "1.14.1"
+  OTP_VERSION: "25.0.4"
 
 permissions:
   contents: read
 
 jobs:
-  run-test:
+  compile:
+    name: Compile
     runs-on: ubuntu-latest
-    strategy:
-      # Specify the OTP and Elixir versions to use when building
-      # and running the workflow steps
-      matrix:
-        otp: ["25.0.4"] # Define the OTP version [required]
-        elixir: ["1.14.1"] # Define the elixir version [required]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ env.OTP_VERSION }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+      - name: Install dependencies
+        working-directory: ${{ env.WORKING_DIR }}
+        run: mix deps.get
+      - name: Compile dependencies
+        working-directory: ${{ env.WORKING_DIR }}
+        run: mix deps.compile
+      - name: Compile
+        working-directory: ${{ env.WORKING_DIR }}
+        run: mix compile
 
-    name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
 
-    # Set up a Postgres DB service. By default, Phoenix applications
-    # use Postgres. This creates a database for running tests.
-    # Additional services can be defined here if required
     services:
       db:
         image: postgres:latest
+        ports: ["5432:5432"]
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST_AUTH_METHOD: "trust"
+          POSTGRES_DB: sporpal_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      MIX_ENV: test
+
     steps:
-      # Step: Setup Elixir + Erlang image as the base
-      - name: Set up Elixir
-        uses: erlef/setup-beam@v1
-        with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
-
-      # Step: Check out the code
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
-
-      # Step: Download project dependencies. If unchanged, uses the cached version
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1.16
+        with:
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+          otp-version: ${{ env.OTP_VERSION }}
       - name: Install dependencies
-        working-directory: ${{ env.working-directory }}
+        working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.get
-
-      # Step: Execute the tests
+      - name: Compile dependencies
+        working-directory: ${{ env.WORKING_DIR }}
+        run: mix deps.compile
+      - name: Setup database
+        env:
+          MIX_ENV: test
+          PGHOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        working-directory: ${{ env.WORKING_DIR }}
+        run: mix ecto.drop
+          mix ecto.create
+          mix ecto.migrate
       - name: Run tests
-        working-directory: ${{ env.working-directory }}
+        env:
+          MIX_ENV: test
+          PGHOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        working-directory: ${{ env.WORKING_DIR }}
         run: mix test
+
+  # Attempt 1: to run test
+  # run-test:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     # Specify the OTP and Elixir versions to use when building
+  #     # and running the workflow steps
+  #     matrix:
+  #       otp: ["25.0.4"] # Define the OTP version [required]
+  #       elixir: ["1.14.1"] # Define the elixir version [required]
+
+  #   name: Test on OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+
+  #   # Set up a Postgres DB service. By default, Phoenix applications
+  #   # use Postgres. This creates a database for running tests.
+  #   # Additional services can be defined here if required
+  #   services:
+  #     db:
+  #       image: postgres:latest
+  #       env:
+  #         POSTGRES_PASSWORD: postgres
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
+
+  #   steps:
+  #     # Step: Setup Elixir + Erlang image as the base
+  #     - name: Set up Elixir
+  #       uses: erlef/setup-beam@v1
+  #       with:
+  #         otp-version: ${{matrix.otp}}
+  #         elixir-version: ${{matrix.elixir}}
+
+  #     # Step: Check out the code
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+
+  #     # Step: Download project dependencies. If unchanged, uses the cached version
+  #     - name: Install dependencies
+  #       working-directory: ${{ env.working-directory }}
+  #       run: mix deps.get
+
+  #     # Step: Execute the tests
+  #     - name: Run tests
+  #       working-directory: ${{ env.working-directory }}
+  #       run: mix test
