@@ -15,7 +15,6 @@ on:
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:
   MIX_ENV: test
-  WORKING_DIR: ./backend
   ELIXIR_VERSION: "1.14.1"
   OTP_VERSION: "25.0.4"
 
@@ -38,13 +37,10 @@ jobs:
           otp-version: ${{ env.OTP_VERSION }}
           elixir-version: ${{ env.ELIXIR_VERSION }}
       - name: Install dependencies
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.get
       - name: Compile dependencies
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.compile
       - name: Compile
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix compile
 
   test:
@@ -69,9 +65,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env:
-      MIX_ENV: test
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -81,10 +74,8 @@ jobs:
           elixir-version: ${{ env.ELIXIR_VERSION }}
           otp-version: ${{ env.OTP_VERSION }}
       - name: Install dependencies
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.get
       - name: Compile dependencies
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix deps.compile
       - name: Setup database
         env:
@@ -93,7 +84,6 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix ecto.drop
           mix ecto.create
           mix ecto.migrate
@@ -104,5 +94,4 @@ jobs:
           POSTGRES_PORT: 5432
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-        # working-directory: ${{ env.WORKING_DIR }}
         run: mix test
