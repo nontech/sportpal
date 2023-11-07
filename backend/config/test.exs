@@ -16,12 +16,6 @@ config :sportpal, Sportpal.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
-# if System.get_env("GITHUB_ACTIONS") do
-#   config :sportpal, MyApp.Repo,
-#     username: "postgres",
-#     password: "postgres"
-# end
-
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :sportpal, SportpalWeb.Endpoint,
