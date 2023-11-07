@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       # Specify the OTP and Elixir versions to use when building
-      # and running the workflow steps.
+      # and running the workflow steps
       matrix:
         otp: ["25.0"] # Define the OTP version [required]
         elixir: ["1.12"] # Define the elixir version [required]
@@ -33,7 +33,7 @@ jobs:
 
     # Set up a Postgres DB service. By default, Phoenix applications
     # use Postgres. This creates a database for running tests.
-    # Additional services can be defined here if required.
+    # Additional services can be defined here if required
     services:
       db:
         image: postgres:latest
@@ -44,23 +44,23 @@ jobs:
           POSTGRES_DB: sportpal_test
 
     steps:
-      # Step: Setup Elixir + Erlang image as the base.
+      # Step: Setup Elixir + Erlang image as the base
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
           elixir-version: ${{matrix.elixir}}
 
-      # Step: Check out the code.
+      # Step: Check out the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step: Download project dependencies. If unchanged, uses the cached version.
+      # Step: Download project dependencies. If unchanged, uses the cached version
       - name: Install dependencies
         working-directory: ${{ env.working-directory }}
         run: mix deps.get
 
-      # Step: Execute the tests.
+      # Step: Execute the tests
       - name: Run tests
         working-directory: ${{ env.working-directory }}
         run: mix test
