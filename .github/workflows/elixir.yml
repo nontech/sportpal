@@ -1,5 +1,5 @@
 name: Elixir CI
-run-name: Elixir CI running
+run-name: Elixir CI run
 
 # Define workflow that runs when changes are pushed to the
 # `main` branch or pushed to a PR branch that targets the `main`
@@ -15,8 +15,8 @@ on:
 # Sets the ENV `MIX_ENV` to `test` for running tests
 env:
   MIX_ENV: test
-  ELIXIR_VERSION: "1.14.1"
-  OTP_VERSION: "25.0.4"
+  ELIXIR_VERSION: "1.14.0"
+  OTP_VERSION: "25"
 
 permissions:
   contents: read
@@ -25,9 +25,6 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,9 +43,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: ./backend
 
     services:
       db:
