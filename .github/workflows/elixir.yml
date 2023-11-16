@@ -108,7 +108,7 @@ jobs:
           sudo apt-get install -y python3-pip
           pip install gigalixir
       - name: Deploy
-        run:
+        run: |
           gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
           gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
           git push -f gigalixir HEAD:refs/heads/main
