@@ -108,7 +108,9 @@ jobs:
           sudo apt-get install -y python3-pip
           pip install setuptools
           pip install gigalixir
-      - name: Deploy
+      - name: Unshallow Repository
+        run: git fetch --prune --unshallow
+      - name: Push to Gigalixir
         run: |
           gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
           gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
