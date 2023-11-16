@@ -1,5 +1,5 @@
-name: Elixir CI
-run-name: Elixir CI run
+name: Elixir CI/CD
+run-name: Elixir CI/CD Pipeline
 
 # Define workflow that runs when changes are pushed to the
 # `main` branch or pushed to a PR branch that targets the `main`
@@ -89,3 +89,25 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         run: mix test
+
+  deploy:
+    name: Deploy to Gigalixir
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install gigalixir-cli
+        run: sudo apt-get install -y python3 python3-pip
+          pip3 install gigalixir
+      - name: Deploy
+        run:
+          gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
+          gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
+          git push -f gigalixir HEAD:refs/heads/main
+      # - name: Set up ssh so we can migrate
+      #   run: mkdir ~/.ssh
+      #     printf "Host *\n StrictHostKeyChecking no" > ~/.ssh/config
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      - name: Migrate
+        # run: gigalixir ps:migrate -a ${{ secrets.GIGALIXIR_APP_NAME }}
+        run: gigalixir run mix ecto.migrate
