@@ -12,12 +12,6 @@ on:
   pull_request:
     branches: ["main"] # adapt branch for project
 
-# Sets the ENV `MIX_ENV` to `test` for running tests
-env:
-  MIX_ENV: test
-  ELIXIR_VERSION: "1.14.0"
-  OTP_VERSION: "25"
-
 permissions:
   contents: read
 
@@ -25,6 +19,10 @@ jobs:
   compile:
     name: Compile
     runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+      ELIXIR_VERSION: "1.14.0"
+      OTP_VERSION: "25"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -43,6 +41,10 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-22.04
+    env:
+      MIX_ENV: test
+      ELIXIR_VERSION: "1.14.0"
+      OTP_VERSION: "25"
 
     services:
       db:
@@ -96,9 +98,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
       - name: Install gigalixir-cli
-        run: sudo apt-get install -y python3 python3-pip
-          pip3 install gigalixir
+        run: sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip install gigalixir
       - name: Deploy
         run:
           gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
