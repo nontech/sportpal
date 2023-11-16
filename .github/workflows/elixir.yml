@@ -103,7 +103,8 @@ jobs:
         with:
           python-version: "3.x"
       - name: Install gigalixir-cli
-        run: sudo apt-get update
+        run: |
+          sudo apt-get update
           sudo apt-get install -y python3-pip
           pip install gigalixir
       - name: Deploy
