@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :sportpal, Sportpal.Repo,
-  username: System.get_env("POSTGRES_USER"),
-  password: System.get_env("POSTGRES_PWD"),
+  username: "postgres",
+  password: "postgres",
   database: "sportpal_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

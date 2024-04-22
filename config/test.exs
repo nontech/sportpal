@@ -9,8 +9,8 @@ config :bcrypt_elixir, :log_rounds, 1
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :sportpal, Sportpal.Repo,
-  username: System.get_env("POSTGRES_USER"),
-  password: System.get_env("POSTGRES_PWD"),
+  username: "postgres",
+  password: "postgres",
   database: "sportpal_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox,
