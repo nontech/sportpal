@@ -9,15 +9,16 @@ defmodule Sportpal.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :username, :string
     field :gender, :string
-    field :bio, :string
-    field :sports, {:array, :string}
     field :date_of_birth, :date
     field :full_name, :string
     field :profile_pic, :string
-    field :city, :string
-    field :country, :string
-    field :availability, {:array, :string}
-    field :matching_partners, {:array, :integer}
+
+    # one-to-one
+    belongs_to :location, Sportpal.Locations.Location
+
+    # one-to-many
+    has_many :user_sports, Sportpal.UserSports.UserSport
+    has_many :offers, Sportpal.Offers.Offer
 
     timestamps()
   end
