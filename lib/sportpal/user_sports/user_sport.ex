@@ -1,6 +1,5 @@
 defmodule Sportpal.UserSports.UserSport do
   use Ecto.Schema
-  import Ecto.Changeset
 
   schema "user_sports" do
     # one-to-one

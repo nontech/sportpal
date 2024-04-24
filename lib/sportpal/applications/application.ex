@@ -1,6 +1,5 @@
 defmodule Sportpal.Applications.Application do
   use Ecto.Schema
-  import Ecto.Changeset
 
   schema "applications" do
     field :skill_level, :integer
