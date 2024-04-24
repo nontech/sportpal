@@ -7,99 +7,145 @@ defmodule SportpalWeb.Graphql.SchemaTest do
     query getUser($id: ID!) {
       user(id: $id) {
         full_name
+        username
         email
+        location {
+          city
+          country
+        }
       }
     }
     """
 
-    # test "query: user", %{conn: conn} do
-    #   # insert a user in test db
-    #   user = insert(:user)
+    test "query: user", %{conn: conn} do
+      # insert a user in test db
+      user = insert(:user)
 
-    #   # make a query
-    #   conn =
-    #     post(conn, "/api/graphql", %{
-    #       "query" => @user_query,
-    #       "variables" => %{id: user.id}
-    #     })
+      # make a query
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @user_query,
+          "variables" => %{id: user.id}
+        })
 
-    #   resp =
-    #     conn
-    #     |> json_response(200)
+      # get the response
+      resp =
+        conn
+        |> json_response(200)
 
-    #   # assert
-    #   assert resp == %{
-    #            "data" => %{
-    #              "user" => %{"email" => user.email, "full_name" => user.full_name}
-    #            }
-    #          }
-    # end
+      # assert
+      assert resp == %{
+               "data" => %{
+                 "user" => %{
+                   "email" => user.email,
+                   "full_name" => user.full_name,
+                   "location" => %{
+                     "city" => user.location.city,
+                     "country" => user.location.country
+                   },
+                   "username" => user.username
+                 }
+               }
+             }
+    end
   end
 
-  describe "inquiries graphql" do
-    @exact_match_query """
-    query myMatch($match: ExactMatchForm!) {
-      exactMatches(match: $match) {
-        full_name
-        profile_pic
-        sport
-        preferred_skill_level
-        city
-        country
+  describe "matches graphql" do
+    @offers_after_date_query """
+    query allOffers($date: Date!, $city: String!, $country: String!) {
+      offersAfterDate(date: $date, city: $city, country: $country) {
+        date
+        creatorUser {
+          full_name
+        }
+        sport {
+          name
+          skill_level
+        }
+        location {
+          city
+          country
+        }
       }
     }
     """
 
-    # test "query: get_matches", %{conn: conn} do
-    #   # first time user
-    #   user_1 = insert(:user)
+    test "returns matches after specified date", %{conn: conn} do
+      # all users are located in Berlin
+      location =
+        insert(:location, %{
+          city: "Berlin",
+          state: "Berlin",
+          zip_code: "10115",
+          country: "Germany"
+        })
 
-    #   # fills the instant match form and submits
-    #   # fails to find a partner
-    #   # wants others to know she is looking for someone
-    #   inquiry_1 = insert(:inquiry, %{user_id: user_1.id})
+      # logged in user
+      insert(:user, %{location: location})
 
-    #   # another user on the platform
-    #   user_2 = insert(:user)
+      # other users
+      user_2 = insert(:user, %{location: location})
+      user_3 = insert(:user, %{location: location})
 
-    #   # fills the form
-    #   # makes a query
-    #   variables = %{
-    #     match: %{
-    #       user_id: user_2.id,
-    #       city: inquiry_1.city,
-    #       country: inquiry_1.country,
-    #       sport: inquiry_1.sport,
-    #       # date: p.date,
-    #       preferred_skill_level: inquiry_1.preferred_skill_level
-    #     }
-    #   }
+      # all like to play tennis
+      sport_2 = insert(:sport, %{name: "tennis"})
+      sport_3 = insert(:sport, %{name: "tennis"})
 
-    #   conn =
-    #     post(conn, "/api/graphql", %{
-    #       "query" => @exact_match_query,
-    #       "variables" => variables
-    #     })
+      # other users put their offers
+      offer_2 =
+        insert(:offer, %{
+          creator_user_id: user_2.id,
+          sport_id: sport_2.id,
+          location_id: location.id
+        })
 
-    #   resp =
-    #     conn
-    #     |> json_response(200)
+      offer_3 =
+        insert(:offer, %{
+          creator_user_id: user_3.id,
+          sport_id: sport_3.id,
+          location_id: location.id
+        })
 
-    #   # assert
-    #   assert resp == %{
-    #            "data" => %{
-    #              "exactMatches" => [
-    #                %{
-    #                  "profile_pic" => user_1.profile_pic,
-    #                  "full_name" => user_1.full_name,
-    #                  "sport" => inquiry_1.sport,
-    #                  "preferred_skill_level" => inquiry_1.preferred_skill_level,
-    #                  "city" => inquiry_1.city,
-    #                  "country" => inquiry_1.country
-    #                }
-    #              ]
-    #            }
-    #          }
-    # end
+      # logged in user searches for offers after today
+      date = Date.utc_today() |> Date.to_string()
+
+      variables = %{
+        date: date,
+        city: location.city,
+        country: location.country
+      }
+
+      # make the query
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @offers_after_date_query,
+          "variables" => variables
+        })
+
+      # get the response
+      resp =
+        conn
+        |> json_response(200)
+
+      actual_response = resp["data"]["offersAfterDate"]
+
+      expected_data = [
+        %{
+          "creatorUser" => %{"full_name" => user_2.full_name},
+          "date" => offer_2.date |> Date.to_string(),
+          "location" => %{"city" => location.city, "country" => location.country},
+          "sport" => %{"name" => sport_2.name, "skill_level" => sport_2.skill_level}
+        },
+        %{
+          "creatorUser" => %{"full_name" => user_3.full_name},
+          "date" => offer_3.date |> Date.to_string(),
+          "location" => %{"city" => location.city, "country" => location.country},
+          "sport" => %{"name" => sport_3.name, "skill_level" => sport_3.skill_level}
+        }
+      ]
+
+      # assert
+      assert Enum.sort(actual_response) == Enum.sort(expected_data)
+    end
   end
 end

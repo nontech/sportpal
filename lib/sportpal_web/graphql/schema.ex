@@ -4,7 +4,7 @@ defmodule SportpalWeb.Graphql.Schema do
   import_types(Absinthe.Type.Custom)
 
   alias Sportpal.Accounts
-  alias Sportpal.Inquiries.Inquiries
+  alias Sportpal.Offers.Offers
 
   # QUERIES
   # ---------------------------------------
@@ -16,10 +16,12 @@ defmodule SportpalWeb.Graphql.Schema do
       resolve(&get_user/3)
     end
 
-    field :instant_matches, list_of(:match) do
-      arg(:match, non_null(:instant_match_data))
+    field :offers_after_date, list_of(:offer) do
+      arg(:date, non_null(:date))
+      arg(:city, non_null(:string))
+      arg(:country, non_null(:string))
 
-      resolve(&get_instant_matches/3)
+      resolve(&get_matches_after_date/3)
     end
 
     # field :profile_matches, list_of(:match) do
@@ -38,26 +40,12 @@ defmodule SportpalWeb.Graphql.Schema do
     {:ok, Accounts.get_user!(id)}
   end
 
-  defp get_instant_matches(_parent, %{match: match_args} = _args, _resolution) do
-    inquiries = Inquiries.get_matches(match_args)
-
-    # convert it into desired object shape
-    result =
-      Enum.reduce(inquiries, [], fn i, acc ->
-        res = %{
-          full_name: i.user.full_name,
-          profile_pic: i.user.profile_pic,
-          sport: i.sport,
-          preferred_skill_level: i.preferred_skill_level,
-          city: i.city,
-          country: i.country
-        }
-
-        [res | acc]
-      end)
-      |> Enum.reverse()
-
-    {:ok, result}
+  def get_matches_after_date(
+        _parent,
+        %{date: _date, city: _city, country: _country} = args,
+        _resolution
+      ) do
+    {:ok, Offers.get_all_offers_after_date(args)}
   end
 
   # OBJECTS
@@ -66,36 +54,35 @@ defmodule SportpalWeb.Graphql.Schema do
   @desc "A user"
   object :user do
     field :email, :string
-    field :confirmed_at, :naive_datetime
+    field :full_name, :string
     field :username, :string
     field :gender, :string
-    field :bio, :string
-    field :sports, list_of(:string)
     field :date_of_birth, :date
-    field :full_name, :string
     field :profile_pic, :string
+    field :location, :location
+    field :sports, list_of(:sport)
+  end
+
+  @desc "A location"
+  object :location do
     field :city, :string
+    field :state, :string
+    field :zip_code, :integer
     field :country, :string
-    field :availability, :string
-    field :matching_partners, list_of(:string)
   end
 
-  @desc "A matching sportpal"
-  object :match do
-    field :sports, list_of(:string)
-    # field(:date, non_null(:date))
-    field :city, non_null(:string)
-    field :country, non_null(:string)
-    field :skill_level, non_null(:string)
-    field :user, :matching_sportpal
+  @desc "A sport"
+  object :sport do
+    field :name, :string
+    field :skill_level, :integer
   end
 
-  @desc "A matching sportpal user details"
-  object :matching_sportpal do
-    field :username, :string
-    field :full_name, :string
-    field :profile_pic, :string
-    field :bio, :string
+  @desc "An offer"
+  object :offer do
+    field :date, :date
+    field :creator_user, :user
+    field :sport, :sport
+    field :location, :location
   end
 
   # INPUT OBJECTS
@@ -103,13 +90,13 @@ defmodule SportpalWeb.Graphql.Schema do
 
   # merely here to model structure
   # does not have any args or a resolver of its own
-  @desc "User inputs for instant match"
-  input_object :instant_match_data do
-    field :city, non_null(:string)
-    field :country, non_null(:string)
-    field :sports, list_of(:string)
-    # TODO: fix date type
-    # field(:date, non_null(:date))
-    field :skill_level, non_null(:string)
-  end
+  # @desc "User inputs for instant match"
+  # input_object :instant_match_data do
+  #   field :city, non_null(:string)
+  #   field :country, non_null(:string)
+  #   field :sports, list_of(:string)
+  #   # TODO: fix date type
+  #   # field(:date, non_null(:date))
+  #   field :skill_level, non_null(:string)
+  # end
 end

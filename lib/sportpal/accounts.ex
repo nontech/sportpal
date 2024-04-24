@@ -58,7 +58,14 @@ defmodule Sportpal.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    query =
+      from u in User,
+        where: u.id == ^id,
+        preload: [:location]
+
+    Repo.one!(query)
+  end
 
   ## User registration
 
