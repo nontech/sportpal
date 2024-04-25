@@ -21,7 +21,7 @@ defmodule SportpalWeb.Graphql.Schema do
       arg(:city, non_null(:string))
       arg(:country, non_null(:string))
 
-      resolve(&get_matches_after_date/3)
+      resolve(&list_all_offers_after_date/3)
     end
 
     # field :profile_matches, list_of(:match) do
@@ -47,7 +47,7 @@ defmodule SportpalWeb.Graphql.Schema do
     {:ok, Accounts.get_user!(id)}
   end
 
-  def get_matches_after_date(
+  def list_all_offers_after_date(
         _parent,
         %{date: _date, city: _city, country: _country} = args,
         _resolution
