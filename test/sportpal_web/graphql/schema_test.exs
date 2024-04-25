@@ -2,7 +2,7 @@ defmodule SportpalWeb.Graphql.SchemaTest do
   use SportpalWeb.ConnCase
   import Sportpal.Factory
 
-  describe "users graphql" do
+  describe "users" do
     @user_query """
     query getUser($id: ID!) {
       user(id: $id) {
@@ -34,7 +34,7 @@ defmodule SportpalWeb.Graphql.SchemaTest do
         |> json_response(200)
 
       # assert
-      assert resp == %{
+      assert resp = %{
                "data" => %{
                  "user" => %{
                    "email" => user.email,
@@ -50,7 +50,7 @@ defmodule SportpalWeb.Graphql.SchemaTest do
     end
   end
 
-  describe "matches graphql" do
+  describe "offers" do
     @offers_after_date_query """
     query allOffers($date: Date!, $city: String!, $country: String!) {
       offersAfterDate(date: $date, city: $city, country: $country) {
@@ -70,7 +70,7 @@ defmodule SportpalWeb.Graphql.SchemaTest do
     }
     """
 
-    test "returns matches after specified date", %{conn: conn} do
+    test "query: all offers", %{conn: conn} do
       # all users are located in Berlin
       location =
         insert(:location, %{
@@ -146,6 +146,84 @@ defmodule SportpalWeb.Graphql.SchemaTest do
 
       # assert
       assert Enum.sort(actual_response) == Enum.sort(expected_data)
+    end
+
+    @create_offer_mutation """
+      mutation CreateOffer($input: CreateOfferInput!) {
+        createOffer(input: $input) {
+          id
+          date
+          creatorUser{
+            id
+            full_name
+          }
+          sport {
+            id
+            name
+            skill_level
+          }
+          location {
+            id
+            city
+            country
+          }
+        }
+      }
+    """
+
+    test "create an offer", %{conn: conn} do
+      # Setup
+      creator_user = insert(:user)
+      sport = insert(:sport)
+      location = insert(:location)
+      date = ~D[2022-01-01] |> Date.to_string()
+
+      variables = %{
+        "input" => %{
+          "date" => date,
+          "creatorUserId" => creator_user.id,
+          "sportId" => sport.id,
+          "locationId" => location.id
+        }
+      }
+
+      # make a query
+      conn =
+        post(conn, "/api/graphql", %{
+          "query" => @create_offer_mutation,
+          "variables" => variables
+        })
+
+      # get the response
+      resp =
+        conn
+        |> json_response(200)
+
+      # expected response
+      expected_response = %{
+        "data" => %{
+          "createOffer" => %{
+            "date" => date,
+            "creatorUser" => %{
+              "id" => creator_user.id,
+              "full_name" => creator_user.full_name
+            },
+            "sport" => %{
+              "id" => sport.id,
+              "name" => sport.name,
+              "skill_level" => sport.skill_level
+            },
+            "location" => %{
+              "id" => location.id,
+              "city" => location.city,
+              "country" => location.country
+            }
+          }
+        }
+      }
+
+      # Assert
+      assert resp = expected_response
     end
   end
 end

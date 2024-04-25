@@ -34,6 +34,13 @@ defmodule SportpalWeb.Graphql.Schema do
   # MUTATIONS
   # ---------------------------------------
 
+  mutation do
+    field :create_offer, :offer do
+      arg(:input, non_null(:create_offer_input))
+      resolve(&create_offer/3)
+    end
+  end
+
   # RESOLVERS
   # ---------------------------------------
   defp get_user(_parent, %{id: id}, _) do
@@ -48,11 +55,16 @@ defmodule SportpalWeb.Graphql.Schema do
     {:ok, Offers.get_all_offers_after_date(args)}
   end
 
+  def create_offer(_parent, %{input: input}, _) do
+    {:ok, Offers.create_offer(input)}
+  end
+
   # OBJECTS
   # ---------------------------------------
 
   @desc "A user"
   object :user do
+    field :id, :integer
     field :email, :string
     field :full_name, :string
     field :username, :string
@@ -65,6 +77,7 @@ defmodule SportpalWeb.Graphql.Schema do
 
   @desc "A location"
   object :location do
+    field :id, :integer
     field :city, :string
     field :state, :string
     field :zip_code, :integer
@@ -73,12 +86,14 @@ defmodule SportpalWeb.Graphql.Schema do
 
   @desc "A sport"
   object :sport do
+    field :id, :integer
     field :name, :string
     field :skill_level, :integer
   end
 
   @desc "An offer"
   object :offer do
+    field :id, :integer
     field :date, :date
     field :creator_user, :user
     field :sport, :sport
@@ -88,15 +103,11 @@ defmodule SportpalWeb.Graphql.Schema do
   # INPUT OBJECTS
   # ---------------------------------------
 
-  # merely here to model structure
-  # does not have any args or a resolver of its own
-  # @desc "User inputs for instant match"
-  # input_object :instant_match_data do
-  #   field :city, non_null(:string)
-  #   field :country, non_null(:string)
-  #   field :sports, list_of(:string)
-  #   # TODO: fix date type
-  #   # field(:date, non_null(:date))
-  #   field :skill_level, non_null(:string)
-  # end
+  # @desc "User inputs to create an offer"
+  input_object :create_offer_input do
+    field :creator_user_id, non_null(:integer)
+    field :date, non_null(:date)
+    field :sport_id, non_null(:integer)
+    field :location_id, non_null(:integer)
+  end
 end
