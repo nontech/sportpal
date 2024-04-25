@@ -56,8 +56,7 @@ defmodule Sportpal.Locations.Locations do
 
   """
   def create_location(city, state, zip_code, country) do
-    %Location{}
-    |> Location.changeset(%{city: city, state: state, zip_code: zip_code, country: country})
+    %Location{city: city, state: state, zip_code: zip_code, country: country}
     |> Repo.insert()
   end
 

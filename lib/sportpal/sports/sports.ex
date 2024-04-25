@@ -55,8 +55,7 @@ defmodule Sportpal.Sports.Sports do
 
   """
   def create_sport(name, skill_level) do
-    %Sport{}
-    |> Sport.changeset(%{name: name, skill_level: skill_level})
+    %Sport{name: name, skill_level: skill_level}
     |> Repo.insert()
   end
 
