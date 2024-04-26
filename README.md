@@ -52,7 +52,10 @@ If you would like to contribute to this project, please follow these steps:
 4. Push your changes to your forked repository.
 5. Submit a pull request to the original repository.
 
-# ER Diagram
-[Click here to view the ER diagram](./docs/diagrams/Sportpal_ER_diagram.png)
+# Diagrams
+[Click here to view the ER diagram](./docs/diagrams/erd_sportpal.png)
+[Click here to view the Conceptual Model](./docs/diagrams/conceptual_model_sportpal.png)
+[Click here to view the System Architecture](./docs/diagrams/system_architecture_sportpal.png)
+
 
 
