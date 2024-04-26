@@ -1,22 +1,33 @@
 # Sportpal
-This project is a web application built using the Elixir programming language and the Phoenix framework, with a GraphQL API for data communication. The purpose of this project is to provide a platform for sports enthusiasts to connect with each other and find partners to play sports with.
+Finding a partner to play Tennis, Badminton, or a similar sport in a new place is challenging. Sportpal - an online web platform - connects such users. With a profile and sports activity management system, Sportpal streamlines the process of connecting with fellow sports enthusiasts. 
 
-# Who is it for?
-If you
-- are new to a place and don't know anyone to play your favorite sports with or
-- are trying to find a tennis partner or a badminton buddy or 
-- are looking to find someone for any of your other favorite sports or
-- even simply looking for someone to spar with
+# What can users do?
+At this momemnt:
 
+- Users can sign up, log in and log out of the platform.
+- Users can create (put up) an offer (game)
+- Users can edit their offer
+- Users can delete their offer
+- Users can view all offers
+- Users can filter offers by parameters like date, sport, and skill level.
 
-# Features
-The Sports Partner Elixir Project comes with the following features:
+In the future:
+- Users can request to take (participate in) the offer (game)
+- Users (creators of offers/games) can accept or decline an invitation to an offer
+- Users can send messages with matched players (offers)
+- Users can rate their sports partner's skill level after a game
+- Users can create group offer where more than one can join the game
 
-- User Authentication: Users can sign up, log in and log out of the platform.
-- User Profiles: Users can create and edit their profile information.
-- Sports Activities: Users can create sports activities and invite other users to join them.
-- Search: Users can search for sports activities based on different criteria such as sport type, location, and date.
-- Messaging [in progress] : Users can send and receive messages to communicate with each other.
+[Click here to view the Conceptual Model](./docs/diagrams/conceptual_model_sportpal.png)
+
+# System Architecture
+SportPal operates on a client-server model where the frontend and backend communicate through GraphQL and RESTful APIs. Phoenix framework is the backend, and PostgreSQL is the database for SportPal. The framework implements the server-side Model View Controller (MVC) pattern. 
+
+SportPal doesn't have a separate front end. The front end utilizes the HEEx template engine, which is part of the Phoenix framework. All frontend pages are server-side rendered. Currently, there are only login, signup, and onboarding pages. All the features, although available in the backend, are yet to be exposed to the front end.
+
+[Click here to view the System Architecture](./docs/diagrams/system_architecture_sportpal.png)
+
+SportPal employs GraphQL APIs for fetching and managing all offers. However, less frequently called data in activities like log-in or signup uses RESTful APIs. Changesets are used for data validation and casting. They ensure only clean and intended data is sent to the database. 
 
 # Technologies Used
 The following technologies were used to build this project:
@@ -26,22 +37,30 @@ The following technologies were used to build this project:
 - GraphQL API
 - PostgreSQL database
 - Absinthe GraphQL library
-- React (frontend)
+- Heex template (as frontend)
+
 
 # Getting Started
-To get started with this project, follow these steps:
 
-1. Clone the repository to your local machine.
-2. Install Elixir and Phoenix framework.
-3. Install PostgreSQL database.
-4. Configure the database connection in the config/dev.exs file.
-5. Install dependencies with mix deps.get
-6. Create and migrate your database with mix ecto.setup
-8. Start the Phoenix server: mix phx.server.
-9. Open the web browser and navigate to http://localhost:4000.
+To set up and run this Phoenix project on your local machine, follow these steps:
 
-# API Documentation
-This project uses GraphQL API for data communication. The API documentation can be found at http://localhost:4000/api/graphiql after starting the Phoenix server.
+1. **Clone the Repository**: Clone the project repository to your local machine using Git.
+2. **Install Elixir and Phoenix**: Ensure you have Elixir installed on your machine. Then, install the Phoenix framework. Visit the [Phoenix installation page](https://hexdocs.pm/phoenix/installation.html) for detailed instructions.
+3. **Install PostgreSQL**: Install PostgreSQL if it's not already installed on your machine. Check [PostgreSQL's official site](https://www.postgresql.org/download/) for installation guides based on your operating system.
+4. **Configure the Database Connection**: Open the `config/dev.exs` file and set up your database connection details:
+```
+    config :your_app, YourApp.Repo,
+    username: "your_username",
+    password: "your_password",
+    database: "your_app_dev",
+    hostname: "localhost",
+    show_sensitive_data_on_connection_error: true,
+    pool_size: 10
+```
+5. **Install Dependencies**: Navigate to the project directory in your terminal and run: `mix deps.get`
+6. **Create and Migrate the Database**: Set up your database with: `mix ecto.setup`
+7. **Start the Phoenix Server**: Launch the Phoenix server: `mix phx.server`
+8. **Visit the Application**: Open your web browser and navigate to: `http://localhost:4000`
 
 # Contributing
 If you would like to contribute to this project, please follow these steps:
@@ -52,10 +71,8 @@ If you would like to contribute to this project, please follow these steps:
 4. Push your changes to your forked repository.
 5. Submit a pull request to the original repository.
 
-# Diagrams
-[Click here to view the ER diagram](./docs/diagrams/erd_sportpal.png)
-[Click here to view the Conceptual Model](./docs/diagrams/conceptual_model_sportpal.png)
-[Click here to view the System Architecture](./docs/diagrams/system_architecture_sportpal.png)
+# ER Diagram
+- [Click here to view the ER diagram](./docs/diagrams/erd_sportpal.png)
 
 
 
