@@ -70,29 +70,29 @@ jobs:
           POSTGRES_PASSWORD: postgres
         run: mix test
 
-  deploy:
-    needs: compile_and_test
-    name: Deploy to Gigalixir
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up Python 3.x
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
-      - name: Install gigalixir-cli
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip install setuptools
-          pip install gigalixir
-      - name: Unshallow Repository
-        run: git fetch --prune --unshallow
-      - name: Push to Gigalixir
-        run: |
-          gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
-          gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
-          git push -f gigalixir HEAD:refs/heads/main
-      - name: Migrate
-        run: gigalixir run mix ecto.migrate
+  # deploy:
+  #   needs: compile_and_test
+  #   name: Deploy to Gigalixir
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Set up Python 3.x
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: "3.x"
+  #     - name: Install gigalixir-cli
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y python3-pip
+  #         pip install setuptools
+  #         pip install gigalixir
+  #     - name: Unshallow Repository
+  #       run: git fetch --prune --unshallow
+  #     - name: Push to Gigalixir
+  #       run: |
+  #         gigalixir login -e ${{ secrets.GIGALIXIR_EMAIL }} -p "${{ secrets.GIGALIXIR_PASSWORD }}" -y
+  #         gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
+  #         git push -f gigalixir HEAD:refs/heads/main
+  #     - name: Migrate
+  #       run: gigalixir run mix ecto.migrate
