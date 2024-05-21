@@ -39,6 +39,11 @@ defmodule SportpalWeb.Graphql.Schema do
       arg(:input, non_null(:create_offer_input))
       resolve(&create_offer/3)
     end
+
+    field :edit_offer, :offer do
+      arg(:input, non_null(:edit_offer_input))
+      resolve(&edit_offer/3)
+    end
   end
 
   # RESOLVERS
@@ -57,6 +62,10 @@ defmodule SportpalWeb.Graphql.Schema do
 
   def create_offer(_parent, %{input: input}, _) do
     {:ok, Offers.create_offer(input)}
+  end
+
+  def edit_offer(_parent, %{input: input}, _) do
+    {:ok, Offers.edit_offer(input)}
   end
 
   # OBJECTS
@@ -105,6 +114,15 @@ defmodule SportpalWeb.Graphql.Schema do
 
   # @desc "User inputs to create an offer"
   input_object :create_offer_input do
+    field :creator_user_id, non_null(:integer)
+    field :date, non_null(:date)
+    field :sport_id, non_null(:integer)
+    field :location_id, non_null(:integer)
+  end
+
+  # @desc "User inputs to edit an offer"
+  input_object :edit_offer_input do
+    field :id, non_null(:integer)
     field :creator_user_id, non_null(:integer)
     field :date, non_null(:date)
     field :sport_id, non_null(:integer)

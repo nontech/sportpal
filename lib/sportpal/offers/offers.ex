@@ -5,6 +5,55 @@ defmodule Sportpal.Offers.Offers do
   alias Sportpal.Offers.Offer
 
   @doc """
+  Retrieves an offer by its ID from the database.
+
+  ## Examples
+
+      iex> get_offer(1)
+      %Offer{
+        id: 1,
+        date: ~D[2022-01-01],
+        creator_user_id: 1,
+        location_id: 1,
+        sport_id: 1
+      }
+
+      iex> get_offer(9999)
+      nil
+
+  """
+  def get_offer(id) do
+    Repo.get(Offer, id)
+  end
+
+  @doc """
+  Retrieves an offer by its ID and preloads its asscoiations from the database.
+
+  ## Examples
+
+      iex> get_offer(1)
+      %Offer{
+        id: 1,
+        date: ~D[2022-01-01],
+        creator_user_id: 1,
+        creator_user: %Sportpal.Users.User{...},
+        location_id: 1,
+        location: %Sportpal.Locations.Location{...}
+        sport_id: 1
+        sport: %Sportpal.Sports.Sport{...},
+      }
+
+      iex> get_offer(9999)
+      nil
+
+  """
+  def get_preloaded_offer(id) do
+    Offer
+    |> Repo.get(id)
+    |> Repo.preload([:creator_user, :sport, :location])
+  end
+
+  @doc """
   Fetches all offers after a specific date from a specific city and country.
 
   ## Examples
@@ -93,6 +142,35 @@ defmodule Sportpal.Offers.Offers do
 
       error ->
         error
+    end
+  end
+
+  def edit_offer(%{
+        id: id,
+        date: date,
+        creator_user_id: creator_user_id,
+        location_id: location_id,
+        sport_id: sport_id
+      }) do
+    # Step 1: Retrieve the offer using a safer approach to handle possible nil returns
+    case get_offer(id) do
+      nil ->
+        {:error, "No offer found or access denied"}
+
+      offer ->
+        # Step 2: Using a changeset to properly handle and validate data updates
+        changes = %{date: date, location_id: location_id, sport_id: sport_id}
+        changeset = Offer.changeset(offer, changes)
+
+        # Step 3: Handle update operation with a case analysis
+        case Repo.update(changeset) do
+          {:ok, updated_offer} ->
+            updated_offer = Repo.preload(updated_offer, [:creator_user, :sport, :location])
+            {:ok, updated_offer}
+
+          {:error, changeset} ->
+            {:error, changeset}
+        end
     end
   end
 end

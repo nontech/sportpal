@@ -11,4 +11,11 @@ defmodule Sportpal.Offers.Offer do
 
     timestamps()
   end
+
+  @doc false
+  def changeset(offer, attrs) do
+    offer
+    |> Ecto.Changeset.cast(attrs, [:date, :location_id, :sport_id])
+    |> Ecto.Changeset.validate_required([:date, :location_id, :sport_id])
+  end
 end
